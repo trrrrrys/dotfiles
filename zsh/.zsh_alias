@@ -1,0 +1,61 @@
+alias readlink='greadlink'
+alias awk='gawk'
+alias sed='gsed'
+alias date='gdate'
+
+alias '..'='cd ..'
+alias -g ...='../..'
+alias -g ....='../../..'
+alias -g .....='../../../..'
+alias -g G='| grep'
+alias -g L='| less'
+alias -g H='| head'
+alias -g T='| tail'
+alias -g S='| sed'
+alias -g C='| cat'
+alias ls="ls -G"
+alias lh='ls -alh'
+alias ll='ls -al'
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+alias mkdir='mkdir -p'
+alias history='history -n 1 | peco | pbcopy'
+
+# sudo の後のコマンドでエイリアスを有効にする
+alias sudo='sudo '
+
+alias v="vim "
+alias vv="vim $(readlink -f ~/.vimrc)"
+alias vz="vim $(readlink -f ~/.zshrc)"
+alias sz="source ~/.zshrc"
+alias vb="vim \$((echo ~/.bashrc && echo ~/.bash_profile)|peco)"
+alias sb="source \$((echo ~/.bashrc && echo ~/.bash_profile)|peco)"
+alias vtmux="vim $(readlink -f ~/.tmux.conf)"
+alias stmux="tmux source ~/.tmux.conf"
+alias relogin="exec $SHELL -l"
+
+# Docker関連
+alias d="docker "
+alias dps="docker ps"
+alias dcom="docker-compose "
+alias dlog="docker ps --format '{{.Names}}' | peco | xargs docker logs -f"
+alias drm="docker ps -a --format '{{.Names}}' | peco | xargs docker rm -f"
+
+alias k="kubectl "
+alias kp="kubectl get pod -n "
+
+alias gorun='go run .'
+
+alias free="top -l 1 | grep PhysMem"
+alias discfree="diskutil info / | grep Free"
+alias cpu="top -l 1 | grep 'CPU usage'"
+# pwdしてコピー
+alias pwc="pwd | pbcopy"
+
+# 現在時刻をunixtimestampで取得
+alias now="date +%s"
+
+
+alias ndselect="ndenv global \$(ndenv versions --bare | peco)"
+
