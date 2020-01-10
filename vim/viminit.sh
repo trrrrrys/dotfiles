@@ -11,7 +11,7 @@ fi
 
 # create symbolic link
 if type "dirname" > /dev/null 2>&1; then
-	ln -sf $(dirname $0)/.vimrc ~/
-	ln -sf $(dirname $0)/vim ~/.vim/uautoload
+	ln -sf $(cd $(dirname $0) && pwd)/.vimrc ~/
+	ln -sf $(cd $(dirname $0) && pwd) ~/.vim/_config
 fi
 

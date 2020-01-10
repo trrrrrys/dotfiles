@@ -8,6 +8,8 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
 " ESC連打でハイライト解除
 nnoremap <esc><esc> :nohlsearch<CR><esc>
 
+
+
 " <c-h> 強制用
 inoremap <BS> <Nop>
 cnoremap <BS> <Nop>
@@ -61,13 +63,9 @@ nmap <silent> <C-f> <Plug>(ac-smooth-scroll-c-f)
 nmap <silent> <C-b> <Plug>(ac-smooth-scroll-c-b)
 
 nnoremap <C-h> ^
-nnoremap <Leader>h ^
-nnoremap <C-l> $<Right>
-nnoremap <Leader>l $<Right>
+nnoremap <C-l> g$
 vnoremap <C-h> ^
-vnoremap <Leader>h ^
-vnoremap <C-l> $<Right>
-vnoremap <Leader>l $<Right>
+vnoremap <C-l> g$
 
 
 " 括弧の補完
@@ -100,17 +98,6 @@ map <Leader> <Plug>(easymotion-prefix)
 
 " space + return で改行挿入
 nnoremap <Leader><Cr> i<CR><ESC>
-
-" 選択中のものを囲む
-vnoremap <Leader>" di""<esc>P
-vnoremap <Leader>' di''<esc>P
-vnoremap <Leader>` di``<esc>P
-vnoremap <Leader>{ di{}<esc>P
-vnoremap <Leader>} di{}<esc>P
-vnoremap <Leader>( di()<esc>P%
-vnoremap <Leader>) di()<esc>P%
-vnoremap <Leader>[ di[]<esc>P
-vnoremap <Leader>] di[]<esc>P
 
 " カーソル位置に改行挿入
 nnoremap <C-j> i<CR><Esc>k$<Right>
