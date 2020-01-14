@@ -8,10 +8,10 @@ if [ ! ~/.vim/autoload/plug.vim ]; then
 fi
 
 # TODO: フォントインストール
-
 # create symbolic link
 if type "dirname" > /dev/null 2>&1; then
-	ln -sf $(cd $(dirname $0) && pwd)/.vimrc ~/
-	ln -sf $(cd $(dirname $0) && pwd) ~/.vim/_config
+	basepath=$(cd $(dirname $0) && pwd)
+	ln -sf $basepath/.vimrc ~/
+	ln -sf $basepath ~/.vim/_config
 fi
 

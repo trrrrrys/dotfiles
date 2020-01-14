@@ -1,14 +1,7 @@
 
-" dein
-if &compatible
-  set nocompatible
-endif
+" 基本設定の読み込み
+call map(sort(split(globpath(&runtimepath, '_config/init/*.vim'))), {->[execute('exec "so" v:val')]})
 
-runtime! _config/init/*.vim
-runtime! _config/plugins/*.vim
-
-if has('persistent_undo')
-  set undodir=~/.vim/undo
-  set undofile
-endif
+" プラグインの設定の読み込み
+call map(sort(split(globpath(&runtimepath, '_config/plugins/*.vim'))), {->[execute('exec "so" v:val')]})
 

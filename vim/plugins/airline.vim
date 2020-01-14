@@ -1,10 +1,9 @@
-set laststatus=2
-
 " カラーテーマ
 colorscheme monokai
 
 " vim-airline
 let g:airline_theme = 'wombat'
+
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
@@ -41,6 +40,7 @@ let g:airline#extensions#ale#warning_symbol = ' '
 let g:airline#extensions#default#section_truncate_width = {}
 let g:airline#extensions#whitespace#enabled = 1
 
+" font
 set guifont=Ricty_Nerd_Font:h16
 
 highlight Pmenu     ctermbg=gray ctermfg=black
