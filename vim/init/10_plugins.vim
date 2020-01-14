@@ -1,3 +1,9 @@
+
+" git commit時
+if $HOME != $USERPROFILE && $GIT_EXEC_PATH != ''
+	finish
+end
+
 call plug#begin('~/.vim/plugged')
 
 if has('nvim')
@@ -9,7 +15,6 @@ else
 endif  
 
 Plug 'ryanoasis/vim-devicons'
-
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
@@ -35,20 +40,13 @@ Plug 'natebosch/vim-lsc'
 Plug 'mattn/vim-lsp-settings'
 Plug 'mattn/vim-goimports'
 
-
 " snipets
 Plug 'SirVer/ultisnips'
 Plug 'thomasfaingnaert/vim-lsp-snippets'
 Plug 'thomasfaingnaert/vim-lsp-ultisnips'
 
-"
-Plug 'Shougo/vimproc.vim'
-
 " <c-/><c-/> でコメント 
 Plug 'tomtom/tcomment_vim'
-
-" 
-Plug 'altercation/vim-colors-solarized'
 
 " Git
 Plug 'tpope/vim-fugitive'
@@ -63,6 +61,7 @@ Plug 'yonchu/accelerated-smooth-scroll'
 
 " easymotion 	
 Plug 'easymotion/vim-easymotion'
+
 Plug 'vim-scripts/surround.vim'
 
 " 選択箇所をpng化する
@@ -71,5 +70,14 @@ Plug 'segeljakt/vim-silicon'
 " tmuxと一緒に使うやつ
 Plug 'tpope/vim-obsession'
 
+" markdown関連
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+Plug 'mattn/sonictemplate-vim'
+Plug 'mattn/vim-maketable' 
+" Plug 'previm/previm'
+Plug 'skanehira/preview-markdown.vim'
+
 call plug#end()
+
 

@@ -81,3 +81,10 @@ set splitright
 " ctagsの設定
 set tags=./tags
 
+set laststatus=2
+
+if has('persistent_undo')
+  set undodir=~/.vim/undo
+  set undofile
+endif
+
