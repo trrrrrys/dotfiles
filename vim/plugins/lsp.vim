@@ -1,4 +1,5 @@
 
+" completeopt を自動設定しない
 let g:asyncomplete_auto_completeopt = 0
 set completeopt=menuone,noinsert,noselect
 
@@ -10,7 +11,7 @@ let g:asyncomplete_log_file = expand('~/asyncomplete.log')
 let g:lsp_async_completion = 1
 
 let g:lsp_signs_error = {'text': '✗'}
-let g:lsp_signs_warning = {'text': '⚠️'}
+let g:lsp_signs_warning = {'text': '!!'}
 let g:lsp_signs_hint = {'text': '💡'}
 
 " let g:lsp_insert_text_enabled = 1
@@ -47,6 +48,10 @@ function! s:configure_lsp() abort
   nnoremap <buffer> <F2> :<C-u>LspRename<CR>
 endfunction
 
-" 自動で補完popupが出るのを防ぐ(重い)
+
+" c-space で補完popup出力
 let g:asyncomplete_auto_popup = 0
+" <Nul>にc-spaceをmapping
+autocmd VimEnter * imap <Nul> <C-Space>
+imap <C-Space> <Plug>(asyncomplete_force_refresh)
 

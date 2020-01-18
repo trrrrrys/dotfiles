@@ -102,3 +102,5 @@ vnoremap <Leader>y "+y
 " paste from clipboard
 nnoremap <Leader>p "+p
 
+
+inoremap <C-l> <Nop>
