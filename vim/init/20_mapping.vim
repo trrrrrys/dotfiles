@@ -8,10 +8,6 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
 " ESC連打でハイライト解除
 nnoremap <esc><esc> :nohlsearch<CR><esc>
 
-" <c-h> 強制用
-inoremap <BS> <Nop>
-cnoremap <BS> <Nop>
-
 " 折り返し時に表示行単位での移動できるようにする
 nnoremap j gj
 nnoremap k gk
