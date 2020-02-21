@@ -36,14 +36,11 @@ Plug 'prabirshrestha/vim-lsp' , { 'commit': '2afe76df7b00684377b07575db12c0832a4
 
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
-Plug 'natebosch/vim-lsc'
 Plug 'mattn/vim-lsp-settings'
 Plug 'mattn/vim-goimports'
 
 " snipets
 Plug 'SirVer/ultisnips'
-Plug 'thomasfaingnaert/vim-lsp-snippets'
-Plug 'thomasfaingnaert/vim-lsp-ultisnips'
 
 " <c-/><c-/> でコメント 
 Plug 'tomtom/tcomment_vim'

@@ -1,10 +1,6 @@
 " <Leader>をspaceに
 let mapleader="\<Space>"
 
-" pumvisible(): is pop up menu visuble
-" <CR>で pub
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
-
 " ESC連打でハイライト解除
 nnoremap <esc><esc> :nohlsearch<CR><esc>
 
@@ -71,23 +67,26 @@ inoremap (<C-j> ()<Left><CR><ESC><S-o>
 inoremap (" ("")<Left><Left>
 inoremap "" ""<Left>
 inoremap `` ``<Left>
-inoremap '' ''<Left>
+inoremap (( ()<Left>
 
+" markdown用
+inoremap ```<Cr> ```<Cr><Cr>```<Up>
+inoremap '' ''<Left>
 
 nnoremap <expr> sr ':%s/' . expand('<cword>') . '/'
 vnoremap <expr> sr ':%s/' . expand('<cword>') . '/'
 
-nnoremap ; <Esc>:
+" ; と : を入れ替える
+nnoremap ; :
 vnoremap ; :
-
 nnoremap : ;
 vnoremap : ;
 
 " space + return で改行挿入
 nnoremap <Leader><Cr> i<CR><ESC>
 
-" カーソル位置に改行挿入
-nnoremap <c-j> i<CR><Esc>kg$
+nnoremap <c-j> 5j
+nnoremap <c-k> 5k
 
 " https://twitter.com/mattn_jp/status/1202603537521401856
 vnoremap < <gv
@@ -95,8 +94,12 @@ vnoremap > >gv
 
 " yank to clipboard
 vnoremap <Leader>y "+y
+nnoremap <Leader>yy "+yy
 " paste from clipboard
 nnoremap <Leader>p "+p
 
 
 inoremap <C-l> <Nop>
+
+nnoremap <silent><expr> * v:count ? '*'
+			\ : ':sil exe "keepj norm! *" <Bar> call winrestview(' . string(winsaveview()) . ')<CR>'
