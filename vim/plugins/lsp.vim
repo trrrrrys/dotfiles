@@ -55,3 +55,6 @@ let g:asyncomplete_auto_popup = 0
 autocmd VimEnter * imap <Nul> <C-Space>
 imap <C-Space> <Plug>(asyncomplete_force_refresh)
 
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<cr>"
