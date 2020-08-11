@@ -20,17 +20,6 @@ fi
 
 zplug load
 
-# bindkey -v
-# function zle-line-init zle-keymap-select {
-# 	VIM_NORMAL="%K{208}%F{black} %k%f%K{208}%F{white} % NORMAL %k%f%K{black}%F{208} %k%f"
-#     VIM_INSERT="%K{075}%F{black} %k%f%K{075}%F{white} % INSERT %k%f%K{black}%F{075} %k%f"
-# 	RPS1="${${KEYMAP/vicmd/$VIM_NORMAL}/(main|viins)/$VIM_INSERT}"
-# 	RPS2=$RPS1
-# 	zle reset-prompt
-# }
-# zle -N zle-line-init
-# zle -N zle-keymap-select
-
 ### 色付けで色の名前が使えたりとか
 autoload -Uz add-zsh-hook
 autoload -U colors && colors
@@ -103,10 +92,10 @@ zstyle ':completion:*' group-name ''
 ### select=2: 補完候補を一覧から選択する。補完候補が2つ以上なければすぐに補完する。
 zstyle ':completion:*:default' menu select=2
 ### 補完候補に色を付ける。
-export LS_COLORS="di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30"
-if [ -n "$LS_COLORS" ]; then
-    zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-fi
+# export LS_COLORS="di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30"
+# if [ -n "$LS_COLORS" ]; then
+#     zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# fi
 ### 補完候補がなければより曖昧に候補を探す。
 ### m:{a-z}={A-Z}: 小文字を大文字に変えたものでも補完する。
 ### r:|[._-]=*: 「.」「_」「-」の前にワイルドカード「*」があるものとして補完する。
@@ -175,32 +164,8 @@ setopt always_last_prompt  # 無駄なスクロールを避ける
 
 setopt IGNOREEOF # ctrl+dでのログアウトを防ぐ
 
+# n秒以上の処理の際にレポートを表示する
 REPORTTIME=3
-
-### zaw
-# bindkey '^h' zaw-history
-# bindkey '^[d' zaw-cdr
-# bindkey '^[g' zaw-git-branches
-# bindkey '^[@' zaw-gitdir
-#
-# function zaw-src-gitdir () {
-#     _dir=$(git rev-parse --show-cdup 2>/dev/null)
-#     if [ $? -eq 0 ]
-#     then
-#         candidates=( $(git ls-files ${_dir} | perl -MFile::Basename -nle \
-#                                                    '$a{dirname $_}++; END{delete $a{"."}; print for sort keys %a}') )
-#     fi
-#
-#     actions=("zaw-src-gitdir-cd")
-#     act_descriptions=("change directory in git repos")
-# }
-#
-# function zaw-src-gitdir-cd () {
-#     BUFFER="cd $1"
-#     zle accept-line
-# }
-#
-# zaw-register-src -n gitdir zaw-src-gitdir
 
 function dkill() {
   read Confirm\?"kill all docker container [Y/y] > "
@@ -216,12 +181,11 @@ function dkill() {
 }
 
 
-# その他
-
-# alias
-source $(dirname $(greadlink -f ~/.zshrc))"/.zsh_alias"
-# 個人用
-source $(dirname $(greadlink -f ~/.zshrc))"/.zsh_alias2"
+# 設定ファイルの読み込み
+for fp in $(find $(dirname $(readlink -f ~/.zshrc))"/settings" -name "*");
+do
+	source $fp;
+done
 
 # gcloud compute ssh ~
 _instances=()
@@ -263,8 +227,27 @@ zstyle ':completion:*' menu select
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
 zstyle ':completion:*:descriptions' format '%BCompleting%b %U%d%u'
 
+eval $(dircolors ~/dev/00_git/dircolors-solarized/dircolors.ansi-dark)
+if [ -n "$LS_COLORS" ]; then
+	    zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+fi
 
-# プロファイリング表示
+# shell level を確認して初回起動時のみ実行
+# bash > zshで起動しているので2
+# zsh直起動の場合は1
+if [ $SHLVL = 2 ]; then
+	# tmux session name
+	SESSIONNAME="trrrrrys"
+	tmux has-session -t $SESSIONNAME &> /dev/null
+	if [ $? != 0 ]; then
+		tmux new-session -s $SESSIONNAME -n script -d;
+		tmux send-keys -t $SESSIONNAME "~/bin/script" C-m;
+		tmux run-shell /home/trrrrrys/.tmux/plugins/tmux-resurrect/scripts/restore.sh;
+	fi
+	tmux a -t $SESSIONNAME;
+fi
+
+# zprof
 # if (which zprof > /dev/null 2>&1) ;then
 #   zprof
 # fi
