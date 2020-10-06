@@ -3,12 +3,13 @@ let mapleader="\<Space>"
 
 " ESC連打でハイライト解除
 nnoremap <esc><esc> :nohlsearch<CR><esc>
+nnoremap <C-c> :nohlsearch<CR><esc>
 
 " 折り返し時に表示行単位での移動できるようにする
-nnoremap j gj
-nnoremap k gk
-vnoremap j gj
-vnoremap k gk
+nnoremap <silent> j gj
+nnoremap <silent> k gk
+vnoremap <silent> j gj
+vnoremap <silent> k gk
 
 nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
@@ -85,8 +86,10 @@ vnoremap : ;
 " space + return で改行挿入
 nnoremap <Leader><Cr> i<CR><ESC>
 
-nnoremap <c-j> 5j
-nnoremap <c-k> 5k
+nnoremap <silent> <c-j> 5gj
+nnoremap <silent> <c-k> 5gk
+vnoremap <silent> <c-j> 5gj
+vnoremap <silent> <c-k> 5gk
 
 " https://twitter.com/mattn_jp/status/1202603537521401856
 vnoremap < <gv
@@ -97,9 +100,16 @@ vnoremap <Leader>y "+y
 nnoremap <Leader>yy "+yy
 " paste from clipboard
 nnoremap <Leader>p "+p
+" paste mode
+" nnoremap <silent> <Leader>p :<C-u>set paste!<CR>
 
+nnoremap <silent> <Leader>c yiwgko<c-o>p<esc>:<c-u>TComment<cr>g$a<space>
 
 inoremap <C-l> <Nop>
 
 nnoremap <silent><expr> * v:count ? '*'
 			\ : ':sil exe "keepj norm! *" <Bar> call winrestview(' . string(winsaveview()) . ')<CR>'
+
+" qfで <CR>押下で qf windowを閉じながら移動する
+autocmd FileType qf nnoremap <buffer><silent> <CR> <CR>:<C-u>ccl<CR>
+autocmd FileType qf nnoremap <buffer><silent> <esc> :<C-u>ccl<CR>

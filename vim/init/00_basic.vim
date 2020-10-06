@@ -28,16 +28,17 @@ set smartindent
 set showmatch
 
 " 現在の行をハイライト
-" set cursorline
+set cursorline
 " コマンドラインの補完
-" set wildmode=list:longest:full
 set wildmenu
+" set wildmode=list:longest:full
 set wildmode=longest:full,full
 
 " ビープ音
 set belloff=all
 
-set scrolloff=10
+set scroll=5
+set scrolloff=0
 
 " Tab文字を半角スペースにする
 " set expandtab
@@ -69,9 +70,6 @@ set updatetime=100
 syntax on
 filetype plugin on
 filetype plugin indent on
-au FileType yaml setl indentkeys-=<:>
-au FileType vim setlocal foldmethod=marker
-au FileType typescript setlocal omnifunc=lsp#complete
 syntax enable
 
 "
@@ -82,6 +80,8 @@ set splitright
 set tags=./tags
 
 set laststatus=2
+
+set clipboard=exclude:.*
 
 if has('persistent_undo')
   set undodir=~/.vim/undo
