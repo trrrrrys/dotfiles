@@ -10,8 +10,8 @@ fi
 # TODO: フォントインストール
 # create symbolic link
 if type "dirname" > /dev/null 2>&1; then
-	basepath=$(cd $(dirname $0) && pwd)
+	basepath=$(cd $(dirname $0) && pwd) 	
 	ln -sf $basepath/.vimrc ~/
-	ln -sf $basepath ~/.vim/_config
+	ln -sf $basepath ~/.vim/_conf
 fi
 
