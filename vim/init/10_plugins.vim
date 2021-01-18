@@ -15,12 +15,12 @@ Plug 'scrooloose/nerdtree'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
 Plug 'mattn/vim-lsp-settings'
 Plug 'mattn/vim-goimports'
 
 " snipets
-Plug 'SirVer/ultisnips'
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
 
 " コメント用
 Plug 'tomtom/tcomment_vim'
@@ -46,6 +46,16 @@ Plug 'tpope/vim-obsession'
 
 " yapf
 Plug 'mindriot101/vim-yapf'
+
+
+" pretter
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'for': ['javascript', 'typescript', 'typescriptreact', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html']
+  \ }
+
+" TODO: syntax のみ利用したい
+Plug 'leafgarland/typescript-vim'
 
 call plug#end()
 

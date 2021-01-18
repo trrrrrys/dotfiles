@@ -99,7 +99,8 @@ vnoremap > >gv
 vnoremap <Leader>y "+y
 nnoremap <Leader>yy "+yy
 " paste from clipboard
-nnoremap <Leader>p "+p
+" TODO: xserver setup
+" nnoremap <Leader>p "+p
 " paste mode
 " nnoremap <silent> <Leader>p :<C-u>set paste!<CR>
 
@@ -107,9 +108,17 @@ nnoremap <silent> <Leader>c yiwgko<c-o>p<esc>:<c-u>TComment<cr>g$a<space>
 
 inoremap <C-l> <Nop>
 
+nnoremap H <Nop>
+nnoremap L <Nop>
+
+" replace paste 時にレジスタに格納しない
+vnoremap p "_dP
+
 nnoremap <silent><expr> * v:count ? '*'
 			\ : ':sil exe "keepj norm! *" <Bar> call winrestview(' . string(winsaveview()) . ')<CR>'
 
 " qfで <CR>押下で qf windowを閉じながら移動する
 autocmd FileType qf nnoremap <buffer><silent> <CR> <CR>:<C-u>ccl<CR>
 autocmd FileType qf nnoremap <buffer><silent> <esc> :<C-u>ccl<CR>
+
+autocmd VimEnter * imap <Nul> <c-cpace>

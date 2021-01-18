@@ -29,41 +29,39 @@ let lsp_signature_help_enabled = 0
 hi Pmenu ctermfg=cyan ctermbg=black
 hi PmenuSel ctermfg=black ctermbg=white
 
-au FileType go,vim,python,typescript call s:configure_lsp()	
+au FileType go,vim,python,typescript,typescriptreact call s:configure_lsp()	
 
 let g:lsp_settings = {
-			\  'gopls': {
-			\	'workspace_config': {
-			\     'staticcheck': v:true,
-			\     'completeUnimported': v:true,
-			\     'caseSensitiveCompletion': v:true,
-			\     'usePlaceholders': v:true,
-			\     'completionDocumentation': v:true,
-			\     'analyses': {
-			\     	'fillstruct': v:true,
-			\     },
-			\     'watchFileChanges': v:true,
-			\     'hoverKind': 'SingleLine', 
-			\     'deepCompletion': v:true, 
-			\   },
-			\	'initialization_options': {
-			\     'staticcheck': v:true,
-			\     'completeUnimported': v:true,
-			\     'caseSensitiveCompletion': v:true,
-			\     'usePlaceholders': v:true,
-			\     'completionDocumentation': v:true,
-			\     'analyses': {
-			\     	'fillstruct': v:true,
-			\     },
-			\     'watchFileChanges': v:true,
-			\     'hoverKind': 'SingleLine', 
-			\     'deepCompletion': v:true, 
-			\   },
-			\  }
+			\		'gopls': {
+			\			'initialization_options': {
+			\				'staticcheck': v:true,
+			\				'completeUnimported': v:true,
+			\				'caseSensitiveCompletion': v:true,
+			\				'usePlaceholders': v:true,
+			\				'completionDocumentation': v:true,
+			\				'analyses': {
+			\					'fillstruct': v:true,
+			\				},
+			\				'symboMatcher': 'fuzzy',
+			\				'codelens': {
+			\					'generate': v:true,
+			\					'test': v:true,
+			\				},
+			\				'watchFileChanges': v:true,
+			\				'hoverKind': 'SingleLine', 
+			\				'deepCompletion': v:true, 
+			\			},
+			\		},
+			\		'pyls-all': { 'disabled': 1 },
+			\		'typescript-language-server': {
+			\			'initialization_options': {
+			\				'usePlaceholders': v:true,
+			\			},
+			\		},
 			\ }
-
 function! s:configure_lsp() abort
   setlocal omnifunc=lsp#complete   " オムニ補完を有効化
+	setlocal signcolumn=yes
   nnoremap <buffer> <C-]> :<C-u>LspDefinition<CR>
   nnoremap <buffer> g<C-]> :<C-u>LspReferences<CR>
   nnoremap <buffer> gs :<C-u>LspDocumentSymbol<CR>
@@ -74,10 +72,13 @@ function! s:configure_lsp() abort
   nnoremap <buffer> gC :<C-u>LspCodeAction<CR>
   nnoremap <buffer> gi :<C-u>LspImplementation<CR>
   nnoremap <buffer> gr :<C-u>LspRename<CR>
+	
+	augroup autoformat
+		autocmd!
+		autocmd BufWritePre *.py call execute('LspDocumentFormatSync')
+	augroup END
 endfunction
 
 " popupmenu visible
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<cr>"
-inoremap <expr> <CR> pumvisible() ? asyncomplete#close_popup() : "\<CR>"
+inoremap <expr> <c-cpace>  pumvisible() ? "\<C-y>" :  '<c-space>'
