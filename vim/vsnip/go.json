@@ -1,0 +1,70 @@
+{
+	"imports": {
+		"prefix": ["imports"],
+		"body": ["import (", "\t$0", ")"]
+	},
+	"init": {
+		"prefix": ["init"],
+		"body": ["func init() {", "\t$0", "}"]
+	},
+	"main": {
+		"prefix": ["main"],
+		"body": ["func main() {", "\t$0", "}"]
+	},
+	"forr": {
+		"prefix": ["forr"],
+		"body": ["for _, v := range $1 {", "\t$2", "}"]
+	},
+	"fori": {
+		"prefix": ["fori"],
+		"body": ["for i := 0; i < ${1:v}; i++ {", "\t$2", "}"]
+	},
+	"append": {
+		"prefix": ["ap"],
+		"body": ["$1 = append$2"]
+	},
+	"panic(err)": {
+		"prefix": ["panicerr"],
+		"body": ["if err != nil {", "\tpanic(err)", "}"]
+	},
+	"test function": {
+		"prefix": ["test"],
+		"body": ["func Test${1:Function}(t *testing.T) {", "\t$2", "}"]
+	},
+	"table test": {
+		"prefix": ["tt"],
+		"body": [
+			"var tests = []struct {",
+			"\tname string",
+			"\tin string",
+			"\twant string",
+			"}{",
+			"{$1},",
+			"}",
+			"for _, tt := range tests {",
+			"\ttt := tt",
+			"\tt.Run(tt.name, func(t *testing.T){",
+			"\t\t// get value",
+			"\t\tgot, err := f()",
+			"\t\tif err != nil {",
+			"\t\t\tt.Fatalf(\"error: %+v\", err)",
+			"\t\t}",
+			"\tif got != tt.expected {",
+			"\t\t\tt.Errorf(\"expect: %v, got: %v\", tt.expected, got)",
+			"\t}",
+			"\t})",
+			"}"
+		]
+	},
+	"benchmark test": {
+		"prefix": ["benchmark"],
+		"body": [
+			"func Benchmark${1:Function}(b *testing.B) {",
+			"\tb.ResetTimer()",
+			"\tfor i := 0; i < b.N; i++ {",
+			"\t\t$2",
+			"\t}",
+			"}"
+		]
+	}
+}

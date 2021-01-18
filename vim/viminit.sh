@@ -13,5 +13,6 @@ if type "dirname" > /dev/null 2>&1; then
 	basepath=$(cd $(dirname $0) && pwd) 	
 	ln -sf $basepath/.vimrc ~/
 	ln -sf $basepath ~/.vim/_conf
+	ln -sf $basepath/vsnip ~/.vsnip
 fi
 
