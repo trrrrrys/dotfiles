@@ -3,7 +3,6 @@ let mapleader="\<Space>"
 
 " ESC連打でハイライト解除
 nnoremap <esc><esc> :nohlsearch<CR><esc>
-nnoremap <C-c> :nohlsearch<CR><esc>
 
 " 折り返し時に表示行単位での移動できるようにする
 nnoremap <silent> j gj
@@ -32,10 +31,6 @@ nnoremap sK <C-w>K
 nnoremap sL <C-w>L
 nnoremap sH <C-w>H
 
-" airline 使用するのでtab関連は定義しない
-" tab移動
-" nnoremap st :<C-u>tabnew<CR>
-
 " switch window
 nnoremap sw <C-w>w
 " previous bufffer
@@ -48,13 +43,6 @@ nnoremap sq :<C-u>bd<CR>
 nnoremap sQ :<C-u>bd<CR>
 nnoremap sc :<C-u>close<CR>
 
-
-nnoremap <C-h> ^
-nnoremap <C-l> g$
-vnoremap <C-h> ^
-vnoremap <C-l> g$
-
-
 " 括弧の補完
 inoremap {<Enter> {}<Left><CR><ESC><S-o>
 inoremap [<Enter> []<Left><CR><ESC><S-o>
@@ -62,7 +50,6 @@ inoremap (<Enter> ()<Left><CR><ESC><S-o>
 inoremap {<C-j> {}<Left><CR><ESC><S-o>
 inoremap [<C-j> []<Left><CR><ESC><S-o>
 inoremap (<C-j> ()<Left><CR><ESC><S-o>
-
 
 
 inoremap (" ("")<Left><Left>
@@ -86,10 +73,10 @@ vnoremap : ;
 " space + return で改行挿入
 nnoremap <Leader><Cr> i<CR><ESC>
 
-nnoremap <silent> <c-j> 5gj
-nnoremap <silent> <c-k> 5gk
-vnoremap <silent> <c-j> 5gj
-vnoremap <silent> <c-k> 5gk
+nnoremap <silent> <c-j> 10gj
+nnoremap <silent> <c-k> 10gk
+vnoremap <silent> <c-j> 10gj
+vnoremap <silent> <c-k> 10gk
 
 " https://twitter.com/mattn_jp/status/1202603537521401856
 vnoremap < <gv
