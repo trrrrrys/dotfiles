@@ -82,4 +82,3 @@ endfunction
 " popupmenu visible
 inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<cr>"
 inoremap <expr> <c-cpace>  pumvisible() ? "\<C-y>" :  '<c-space>'
-inoremap <expr> <esc>  pumvisible() ? "\<C-y><esc>" :  '<esc>'

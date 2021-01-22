@@ -1,31 +1,71 @@
 {
+	"package main": {
+		"prefix": ["pm"],
+		"body": ["package main"]
+	},
+	"package": {
+		"prefix": ["pa"],
+		"body": ["package $0"]
+	},
 	"imports": {
 		"prefix": ["imports"],
 		"body": ["import (", "\t$0", ")"]
 	},
+	"sq \"github.com/Masterminds/squirrel\"": {
+		"prefix": ["importsquirrel"],
+		"body": ["sq \"github.com/Masterminds/squirrel\""]
+	},
 	"init": {
 		"prefix": ["init"],
-		"body": ["func init() {", "\t$0", "}"]
+		"body": ["func init() {", "\t$1", "}$0"]
 	},
 	"main": {
 		"prefix": ["main"],
-		"body": ["func main() {", "\t$0", "}"]
+		"body": ["func main() {", "\t$1", "}"]
 	},
 	"forr": {
 		"prefix": ["forr"],
-		"body": ["for _, v := range $1 {", "\t$2", "}"]
+		"body": ["for _, v := range $1 {", "\t$2", "}$0"]
 	},
 	"fori": {
 		"prefix": ["fori"],
-		"body": ["for i := 0; i < ${1:v}; i++ {", "\t$2", "}"]
+		"body": ["for i := 0; i < ${1:v}; i++ {", "\t$2", "}$0"]
 	},
 	"append": {
 		"prefix": ["ap"],
 		"body": ["$1 = append$2"]
 	},
+	"st": {
+		"prefix": ["st"],
+		"body": ["type ${1:st} struct {", "\t$2", "}$0"]
+	},
 	"panic(err)": {
 		"prefix": ["panicerr"],
-		"body": ["if err != nil {", "\tpanic(err)", "}"]
+		"body": ["if err != nil {", "\tpanic(err)", "}$0"]
+	},
+	"meth": {
+		"prefix": ["meth"],
+		"body": ["func ($1) ${2:Method}($3) $4 {", "\t$5", "}"]
+	},
+	"fmt.Println": {
+		"prefix": ["fn"],
+		"body": ["fmt.Println(\"${1:$TM_SELECTED_TEXT}\")$0"]
+	},
+	"fmt.Printf": {
+		"prefix": ["ff"],
+		"body": ["fmt.Printf(\"$1[0]: %v\", $1)$0"]
+	},
+	"log.Println": {
+		"prefix": ["ln"],
+		"body": ["log.Println(\"${1:$TM_SELECTED_TEXT}\")$0"]
+	},
+	"json": {
+		"prefix": ["json"],
+		"body": ["`json:\"$1\"`"]
+	},
+	"func": {
+		"prefix": ["func"],
+		"body": ["func $1() {", "\t$2", "}"]
 	},
 	"test function": {
 		"prefix": ["test"],
