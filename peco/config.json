@@ -1,0 +1,4 @@
+{
+	"OnCancel": "error",
+	"InitialFilter": "Fuzzy"
+}
