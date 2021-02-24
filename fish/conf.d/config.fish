@@ -38,9 +38,28 @@ function fish_prompt
 		(set_color green) 
 end
 
+# command stack
+function push-line
+  set cl (commandline)
+  commandline -f repaint
+  if test -n (string join $cl)
+    set -g fish_buffer_stack $cl
+    commandline ''
+    commandline -f repaint
+    function restore_line -e fish_postexec
+      commandline $fish_buffer_stack
+      functions -e restore_line
+      set -e fish_buffer_stack
+    end
+  end
+end
+ 
 function fish_user_key_bindings
 	# peco history
 	# require oh-my-fish/plugin-peco
 	# fisher install oh-my-fish/plugin-peco
 	bind \cr 'peco_select_history (commandline -b)'
+	# commandline stack
+  bind \cq push-line
+  bind \cg gcd
 end

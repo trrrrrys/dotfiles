@@ -19,22 +19,25 @@ end
 
 # ghq + peco で cd
 function gcd
+	set -l cl (commandline)
 	type ghq peco 1> /dev/null
 	if [ $status != 0 ]
 		return 1
 	end
-	set _path 
+	set -l _path 
 	# 引数をとった場合はデフォルトでgrepをかける
 	if test (count $argv) -ge 1
-		set -l cmd "ghq list | grep "
+		set -l cmd "ghq list --full-path | grep "
 		for item in $argv
 			set cmd $cmd" -e "$item
 		end 
-		set _path $HOME/ghq/(eval $cmd | peco )
+		 eval $cmd | peco | read _path
 	else
-	 set _path $HOME/ghq/(ghq list | peco )
+		 ghq list --full-path | peco | read _path
 	end
-	if [ $status = 0 ]
+	if [ $_path ]
 		cd $_path
+		commandline $cl
+		commandline -f repaint
 	end
 end
