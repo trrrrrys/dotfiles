@@ -37,7 +37,41 @@ function gcd
 	end
 	if [ $_path ]
 		cd $_path
-		commandline $cl
+		commandline ''
+		commandline -f repaint
+	end
+end
+
+function ctrlp
+	set -l cl (commandline)
+	set -l _path
+	switch $cl
+		case "cd*"
+			set -l find_dir ( string replace -r '(cd\\s+)' '' $cl )
+			set -l paths ( \
+				find \
+				$find_dir -type d -name ".git*"	-prune -o \
+				-name "node_modules*" -prune -o \
+				-type d 2>/dev/null \
+			)
+			if [ $status = 0 ]
+				 string split " " $paths | peco | read _path
+			else
+				if [ -n $find_dir ] 
+					find . -type d -name ".git*"	-prune -o \
+						-name "node_modules*" -prune -o \
+						-type d 2>/dev/null | peco --query $find_dir | read _path
+				else
+					find . -type d -name ".git*"	-prune -o \
+						-name "node_modules*" -prune -o \
+						-type d 2>/dev/null | peco | read _path
+				end
+			end
+		case "*"
+			return 0
+	end
+	if [ $_path ]
+		commandline "cd "$_path
 		commandline -f repaint
 	end
 end

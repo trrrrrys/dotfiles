@@ -14,7 +14,8 @@ alias mkdir='mkdir -p'
 alias relogin="exec $SHELL -l"
 
 # git diff and peco
-alias gd="git status -s -uno | awk '{ print \$2 }' | peco  | xargs git diff"
+alias gd="git ls-files -m | peco | xargs git diff"
+alias gds="git status -s -uno | grep '^[MARCD]' | awk '{ print \$2 }' | peco | xargs git diff"
 
 alias sudo='sudo '
 alias v="vim "
@@ -52,3 +53,4 @@ alias ndselect="ndenv version --bare | peco | xargs ndenv global"
 alias pip="python3 -m pip "
 alias bat="batcat"
 
+alias todolist="find . -type d -name .git -prune -o -type d -name 'node_modules*' -prune -o -type f -print | xargs grep -n 'TODO'"

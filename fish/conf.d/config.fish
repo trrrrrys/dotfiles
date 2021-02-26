@@ -34,7 +34,7 @@ function fish_prompt
 		(set_color cyan) \
 		(__fish_git_prompt)
 	# input
-	printf '\n%s$ ' \
+	printf ' %s$ ' \
 		(set_color green) 
 end
 
@@ -60,6 +60,9 @@ function fish_user_key_bindings
 	# fisher install oh-my-fish/plugin-peco
 	bind \cr 'peco_select_history (commandline -b)'
 	# commandline stack
-  bind \cq push-line
-  bind \cg gcd
+	bind \cq push-line
+	bind \cg gcd
+	bind \cp ctrlp
+	bind \cb execute
+	bind \cd cancel
 end
