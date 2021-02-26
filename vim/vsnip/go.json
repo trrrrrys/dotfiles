@@ -8,7 +8,7 @@
 		"body": ["package $0"]
 	},
 	"imports": {
-		"prefix": ["imports"],
+		"prefix": ["ims"],
 		"body": ["import (", "\t$0", ")"]
 	},
 	"sq \"github.com/Masterminds/squirrel\"": {
@@ -17,15 +17,27 @@
 	},
 	"init": {
 		"prefix": ["init"],
-		"body": ["func init() {", "\t$1", "}$0"]
+		"body": [
+			"func init() {", 
+			"\t$1", 
+			"}$0"
+		]
 	},
 	"main": {
 		"prefix": ["main"],
-		"body": ["func main() {", "\t$1", "}"]
+		"body": [
+			"func main() {",
+			"\t$1",
+			"}"
+		]
 	},
 	"forr": {
 		"prefix": ["forr"],
-		"body": ["for _, v := range $1 {", "\t$2", "}$0"]
+		"body": [
+			"for _, v := range $1 {",
+			"\t$2",
+			"}$0"
+		]
 	},
 	"fori": {
 		"prefix": ["fori"],
@@ -39,25 +51,49 @@
 		"prefix": ["st"],
 		"body": ["type ${1:st} struct {", "\t$2", "}$0"]
 	},
+	"interface": {
+		"prefix": ["interface"],
+		"body": ["type ${1:st} interface {", "\t$2", "}$0"]
+	},
 	"panic(err)": {
 		"prefix": ["panicerr"],
-		"body": ["if err != nil {", "\tpanic(err)", "}$0"]
+		"body": [
+			"if err != nil {", 
+			"\tpanic(err)",
+			"}$0"
+		]
 	},
 	"meth": {
 		"prefix": ["meth"],
-		"body": ["func ($1) ${2:Method}($3) $4 {", "\t$5", "}"]
+		"body": [
+			"func (${1}) ${2:Method}($3) $4 {",
+			"\t$5",
+			"}"
+		]
+	},
+	"fmt.Println(\"\")": {
+		"prefix": ["fn\""],
+		"body": ["fmt.Println(\"${1:$TM_SELECTED_TEXT}\")$0"]
 	},
 	"fmt.Println": {
 		"prefix": ["fn"],
-		"body": ["fmt.Println(\"${1:$TM_SELECTED_TEXT}\")$0"]
+		"body": ["fmt.Println(${1:$TM_SELECTED_TEXT})$0"]
 	},
 	"fmt.Printf": {
 		"prefix": ["ff"],
-		"body": ["fmt.Printf(\"$1[0]: %v\", $1)$0"]
+		"body": ["fmt.Printf(\"$1: %v\\n\", $1)$0"]
 	},
-	"log.Println": {
+	"log.Println()": {
 		"prefix": ["ln"],
+		"body": ["log.Println(${1:$TM_SELECTED_TEXT})$0"]
+	},
+	"log.Println(\"\")": {
+		"prefix": ["ln\""],
 		"body": ["log.Println(\"${1:$TM_SELECTED_TEXT}\")$0"]
+	},
+	"log.Printf": {
+		"prefix": ["lf"],
+		"body": ["log.Printf(\"$1: %v\\n\", $1)$0"]
 	},
 	"json": {
 		"prefix": ["json"],
@@ -66,6 +102,37 @@
 	"func": {
 		"prefix": ["func"],
 		"body": ["func $1() {", "\t$2", "}"]
+	},
+	"context.Context": {
+		"prefix": ["ctxa"],
+		"body": ["ctx context.Context"]
+	},
+	"w http.ResponseWriter, r *http.Requrest": {
+		"prefix": ["wr"],
+		"body": ["w http.ResponseWriter, r *http.Requrest"]
+	},
+	"func f(w http.ResponseWriter, r *http.Requrest)": {
+		"prefix": ["wrf"],
+		"body": [
+			"func $1(w http.ResponseWriter, r *http.Requrest) {",
+			"\t$0",
+			"}"
+		]
+	},
+	"mysqltmpl": {
+		"prefix": ["mysqltmpl"],
+		"body": [
+			"c := mysql.Config{}",
+			"db, err :=  sql.Open(\"mysql\", c.FormatDSN()+\"&charset=utf8mb4\")",
+			"if err == nil {",
+			"\terr = db.Ping()",
+			"}",
+			"if err != nil {",
+			"\t",
+			"}",
+			"db.SetMaxIdleConns(20)",
+			"db.SetConnMaxIdleTime(10 * time.Minute)"
+		]
 	},
 	"test function": {
 		"prefix": ["test"],
@@ -105,6 +172,13 @@
 			"\t\t$2",
 			"\t}",
 			"}"
+		]
+	},
+	"todot": {
+		"prefix": "todot",
+		"body": [
+			"// ${VIM:system('python -c \"import sys;from datetime import datetime as dt;sys.stdout.write(str(dt.now()))\"')}",
+			"// TODO: $0"
 		]
 	}
 }

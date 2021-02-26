@@ -2,7 +2,8 @@
 let mapleader="\<Space>"
 
 " ESC連打でハイライト解除
-nnoremap <esc><esc> :nohlsearch<CR><esc>
+" nnoremap <esc><esc> :nohlsearch<CR><esc>
+nnoremap <silent><C-c><C-c> :nohlsearch<CR><esc>
 
 " 折り返し時に表示行単位での移動できるようにする
 nnoremap <silent> j gj
@@ -17,6 +18,7 @@ nnoremap Q <Nop>
 " 参考: https://qiita.com/tekkoc/items/98adcadfa4bdc8b5a6ca
 nnoremap s <Nop>
 " x をレジスタに格納しない
+" "_ ブラックホールレジスタ
 nnoremap x "_x
 
 " ウインドウの移動
@@ -85,11 +87,10 @@ vnoremap > >gv
 " yank to clipboard
 vnoremap <Leader>y "+y
 nnoremap <Leader>yy "+yy
+nnoremap <Leader>yy "+yy
 " paste from clipboard
-" TODO: xserver setup
-" nnoremap <Leader>p "+p
+nnoremap <silent> <Leader>p "+p
 " paste mode
-" nnoremap <silent> <Leader>p :<C-u>set paste!<CR>
 
 nnoremap <silent> <Leader>c yiwgko<c-o>p<esc>:<c-u>TComment<cr>g$a<space>
 
@@ -105,7 +106,17 @@ nnoremap <silent><expr> * v:count ? '*'
 			\ : ':sil exe "keepj norm! *" <Bar> call winrestview(' . string(winsaveview()) . ')<CR>'
 
 " qfで <CR>押下で qf windowを閉じながら移動する
-autocmd FileType qf nnoremap <buffer><silent> <CR> <CR>:<C-u>ccl<CR>
-autocmd FileType qf nnoremap <buffer><silent> <esc> :<C-u>ccl<CR>
+" let g:qf_disle_statusline = 1
+augroup QuickFixWindow
+	autocmd!
+	autocmd FileType qf nnoremap <buffer><silent> <CR> <CR>:<C-u>ccl<CR>
+	autocmd FileType qf nnoremap <buffer><silent> <esc> :<C-u>ccl<CR>
+	autocmd FileType qf nnoremap <buffer><Up> <Nop>
+	autocmd FileType qf nnoremap <buffer><Down> <Nop>
+	autocmd FileType qf nnoremap <buffer><Left> <Nop>
+	autocmd FileType qf nnoremap <buffer><Right> <Nop>
+augroup END
 
 autocmd VimEnter * imap <Nul> <c-cpace>
+
+" wsl用

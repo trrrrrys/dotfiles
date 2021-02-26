@@ -3,6 +3,7 @@ colorscheme monokai
 
 " vim-airline
 let g:airline_theme = 'wombat'
+set guifont=Ricty-Nerd-Font:h30
 
 " let g:airline_powerline_fonts = 1
 let g:airline#extensions#branch#enabled = 1

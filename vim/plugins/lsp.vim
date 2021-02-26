@@ -28,8 +28,10 @@ let lsp_signature_help_enabled = 0
 " let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
 hi Pmenu ctermfg=cyan ctermbg=black
 hi PmenuSel ctermfg=black ctermbg=white
+" lsp_document_highlight color
+highlight lspReference ctermbg=darkgray
 
-au FileType go,vim,python,typescript,typescriptreact call s:configure_lsp()	
+au FileType go,python,typescript,typescriptreact,rust call s:configure_lsp()
 
 let g:lsp_settings = {
 			\		'gopls': {
