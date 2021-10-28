@@ -4,5 +4,15 @@
 		"body": [
 			"${VIM:system('python -c \"import uuid, sys;sys.stdout.write(str(uuid.uuid4()))\"')}"
 		]
+	},
+	"now": {
+		"prefix": "nowunix",
+		"body": [
+			"${VIM:system('python -c \"import time, sys;sys.stdout.write(int(time.time()))\"')}"
+		]
+	},
+	"---": {
+		"prefix": "---",
+		"body": "oO0OoO0OoO0Oo"
 	}
 }

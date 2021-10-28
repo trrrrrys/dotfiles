@@ -10,7 +10,6 @@ nnoremap <silent> j gj
 nnoremap <silent> k gk
 vnoremap <silent> j gj
 vnoremap <silent> k gk
-
 nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 nnoremap Q <Nop>
@@ -20,6 +19,7 @@ nnoremap s <Nop>
 " x をレジスタに格納しない
 " "_ ブラックホールレジスタ
 nnoremap x "_x
+vnoremap x "_x
 
 " ウインドウの移動
 nnoremap sj <C-w>j
@@ -43,7 +43,6 @@ nnoremap <silent> sn :<C-u>bn<CR>
 nnoremap sv :<C-u>vs<CR>
 nnoremap sq :<C-u>bd<CR>
 nnoremap sQ :<C-u>bd<CR>
-nnoremap sc :<C-u>close<CR>
 
 " 括弧の補完
 inoremap {<Enter> {}<Left><CR><ESC><S-o>
@@ -53,20 +52,10 @@ inoremap {<C-j> {}<Left><CR><ESC><S-o>
 inoremap [<C-j> []<Left><CR><ESC><S-o>
 inoremap (<C-j> ()<Left><CR><ESC><S-o>
 
-
-inoremap (" ("")<Left><Left>
-inoremap "" ""<Left>
-inoremap `` ``<Left>
-inoremap (( ()<Left>
-
-" markdown用
-inoremap ```<Cr> ```<Cr><Cr>```<Up>
-inoremap '' ''<Left>
-
 nnoremap <expr> sr ':%s/' . expand('<cword>') . '/'
 vnoremap <expr> sr ':%s/' . expand('<cword>') . '/'
 
-" ; と : を入れ替える
+" ; と : を入れ替える usキー用
 nnoremap ; :
 vnoremap ; :
 nnoremap : ;
@@ -85,12 +74,11 @@ vnoremap < <gv
 vnoremap > >gv
 
 " yank to clipboard
-vnoremap <Leader>y "+y
-nnoremap <Leader>yy "+yy
-nnoremap <Leader>yy "+yy
+vnoremap <silent><Leader>y "+y
+nnoremap <silent><Leader>yy "+yy
+nnoremap <silent><Leader>yy "+yy
 " paste from clipboard
 nnoremap <silent> <Leader>p "+p
-" paste mode
 
 nnoremap <silent> <Leader>c yiwgko<c-o>p<esc>:<c-u>TComment<cr>g$a<space>
 

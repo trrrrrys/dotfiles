@@ -27,7 +27,7 @@ Plug 'tomtom/tcomment_vim'
 
 " Git
 Plug 'tpope/vim-fugitive'
-Plug 'Xuyuanp/nerdtree-git-plugin'
+" Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
 
 " tab
@@ -41,9 +41,6 @@ Plug 'vim-scripts/surround.vim'
 " 選択箇所をpng化する
 Plug 'segeljakt/vim-silicon'
 
-" tmuxと一緒に使うやつ
-Plug 'tpope/vim-obsession'
-
 " yapf
 Plug 'mindriot101/vim-yapf'
 
@@ -56,6 +53,8 @@ Plug 'prettier/vim-prettier', {
 
 " TODO: syntax のみ利用したい
 Plug 'leafgarland/typescript-vim'
+
+Plug 'vim-denops/denops.vim'
 
 call plug#end()
 

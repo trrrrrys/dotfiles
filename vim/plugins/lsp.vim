@@ -31,36 +31,33 @@ hi PmenuSel ctermfg=black ctermbg=white
 " lsp_document_highlight color
 highlight lspReference ctermbg=darkgray
 
-au FileType go,python,typescript,typescriptreact,rust call s:configure_lsp()
+let g:lsp_document_code_action_signs_enabled = 0
+au FileType go,rust,vim,python,typescript,typescriptreact,rust call s:configure_lsp()
 
 let g:lsp_settings = {
 			\		'gopls': {
 			\			'initialization_options': {
 			\				'staticcheck': v:true,
 			\				'completeUnimported': v:true,
-			\				'caseSensitiveCompletion': v:true,
 			\				'usePlaceholders': v:true,
 			\				'completionDocumentation': v:true,
 			\				'analyses': {
 			\					'fillstruct': v:true,
 			\				},
-			\				'symboMatcher': 'fuzzy',
-			\				'codelens': {
+			\				'matcher': 'fuzzy',
+			\				'codelenses': {
 			\					'generate': v:true,
 			\					'test': v:true,
+			\					'tidy': v:true,
+			\					'vendor': v:false,
 			\				},
-			\				'watchFileChanges': v:true,
 			\				'hoverKind': 'SingleLine', 
 			\				'deepCompletion': v:true, 
 			\			},
 			\		},
 			\		'pyls-all': { 'disabled': 1 },
-			\		'typescript-language-server': {
-			\			'initialization_options': {
-			\				'usePlaceholders': v:true,
-			\			},
-			\		},
-			\ }
+			\		'typescript-language-server': { 'disabled': 1 },
+			\ }			
 function! s:configure_lsp() abort
   setlocal omnifunc=lsp#complete   " オムニ補完を有効化
 	setlocal signcolumn=yes
@@ -74,10 +71,9 @@ function! s:configure_lsp() abort
   nnoremap <buffer> gC :<C-u>LspCodeAction<CR>
   nnoremap <buffer> gi :<C-u>LspImplementation<CR>
   nnoremap <buffer> gr :<C-u>LspRename<CR>
-	
 	augroup autoformat
 		autocmd!
-		autocmd BufWritePre *.py call execute('LspDocumentFormatSync')
+		autocmd BufWritePre *.py,*.rs call execute('LspDocumentFormatSync')
 	augroup END
 endfunction
 

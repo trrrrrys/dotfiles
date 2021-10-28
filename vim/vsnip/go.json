@@ -17,27 +17,15 @@
 	},
 	"init": {
 		"prefix": ["init"],
-		"body": [
-			"func init() {", 
-			"\t$1", 
-			"}$0"
-		]
+		"body": ["func init() {", "\t$1", "}$0"]
 	},
 	"main": {
 		"prefix": ["main"],
-		"body": [
-			"func main() {",
-			"\t$1",
-			"}"
-		]
+		"body": ["func main() {", "\t$1", "}"]
 	},
 	"forr": {
 		"prefix": ["forr"],
-		"body": [
-			"for _, v := range $1 {",
-			"\t$2",
-			"}$0"
-		]
+		"body": ["for _, v := range $1 {", "\t$2", "}$0"]
 	},
 	"fori": {
 		"prefix": ["fori"],
@@ -57,19 +45,11 @@
 	},
 	"panic(err)": {
 		"prefix": ["panicerr"],
-		"body": [
-			"if err != nil {", 
-			"\tpanic(err)",
-			"}$0"
-		]
+		"body": ["if err != nil {", "\tpanic(err)", "}$0"]
 	},
 	"meth": {
 		"prefix": ["meth"],
-		"body": [
-			"func (${1}) ${2:Method}($3) $4 {",
-			"\t$5",
-			"}"
-		]
+		"body": ["func (${1}) ${2:Method}($3) $4 {", "\t$5", "}"]
 	},
 	"fmt.Println(\"\")": {
 		"prefix": ["fn\""],
@@ -109,15 +89,11 @@
 	},
 	"w http.ResponseWriter, r *http.Requrest": {
 		"prefix": ["wr"],
-		"body": ["w http.ResponseWriter, r *http.Requrest"]
+		"body": ["w http.ResponseWriter, r *http.Request"]
 	},
 	"func f(w http.ResponseWriter, r *http.Requrest)": {
 		"prefix": ["wrf"],
-		"body": [
-			"func $1(w http.ResponseWriter, r *http.Requrest) {",
-			"\t$0",
-			"}"
-		]
+		"body": ["func $1(w http.ResponseWriter, r *http.Request) {", "\t$0", "}"]
 	},
 	"mysqltmpl": {
 		"prefix": ["mysqltmpl"],
@@ -144,8 +120,58 @@
 			"var tests = []struct {",
 			"\tname string",
 			"\tin string",
-			"\twant string",
+			"\texpect string",
 			"}{",
+			"\t{$1},",
+			"}",
+			"for _, tt := range tests {",
+			"\ttt := tt",
+			"\tt.Run(tt.name, func(t *testing.T){",
+			"\t\t// get value",
+			"\t\tgot, err := f()",
+			"\t\tif err != nil {",
+			"\t\t\tt.Fatalf(\"error: %+v\", err)",
+			"\t\t}",
+			"\tif tt.expect != got {",
+			"\t\t\tt.Errorf(\"expect: %v, got: %v\", tt.expect, got)",
+			"\t}",
+			"\t})",
+			"}"
+		]
+	},
+	"table test (use reflect)": {
+		"prefix": ["ttr"],
+		"body": [
+			"var tests = []struct {",
+			"\tname string",
+			"\tin string",
+			"\texpect string",
+			"}{",
+			"\t{$1},",
+			"}",
+			"for _, tt := range tests {",
+			"\ttt := tt",
+			"\tt.Run(tt.name, func(t *testing.T){",
+			"\t\t// get value",
+			"\t\tgot, err := f()",
+			"\t\tif err != nil {",
+			"\t\t\tt.Fatalf(\"error: %+v\", err)",
+			"\t\t}",
+			"\tif !reflect.DeepEqual(tt.expect, got) {",
+			"\t\t\tt.Errorf(\"expect: %v, got: %v\", tt.expect, got)",
+			"\t}",
+			"\t})",
+			"}"
+		]
+	},
+	"table test (use gocmp)": {
+		"prefix": ["ttcmp"],
+		"body": [
+			"var tests = []struct {",
+			"\tname string",
+			"\tin string",
+			"\texpect string",
+			"\t}{",
 			"{$1},",
 			"}",
 			"for _, tt := range tests {",
@@ -156,8 +182,8 @@
 			"\t\tif err != nil {",
 			"\t\t\tt.Fatalf(\"error: %+v\", err)",
 			"\t\t}",
-			"\tif got != tt.expected {",
-			"\t\t\tt.Errorf(\"expect: %v, got: %v\", tt.expected, got)",
+			"\tif !reflect.DeepEqual(tt.expect, got) {",
+			"\t\t\tt.Errorf(cmp.Diff(tt.expect, got))",
 			"\t}",
 			"\t})",
 			"}"
