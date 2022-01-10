@@ -74,8 +74,6 @@ set tags=./tags
 
 set laststatus=2
 
-set clipboard=exclude:.*
-
 if has('persistent_undo')
   set undodir=~/.vim/undo
   set undofile

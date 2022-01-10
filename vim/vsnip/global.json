@@ -8,7 +8,7 @@
 	"now": {
 		"prefix": "nowunix",
 		"body": [
-			"${VIM:system('python -c \"import time, sys;sys.stdout.write(int(time.time()))\"')}"
+			"${VIM:system('python -c \"import time, sys;sys.stdout.write(str(int(time.time())))\"')}"
 		]
 	},
 	"---": {
