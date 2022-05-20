@@ -1,0 +1,89 @@
+
+shell:
+  program: /Windows/System32/wsl.exe
+
+scrolling:
+  # disable scroll
+  history: 0
+
+font:
+  size: 14
+  normal:
+    # family: "HackGen Console"
+    # family: Ricty Nerd Font Diminished
+    family: RictyDiminished NF
+    # family: "Ricty Nerd Font"
+    # style: regular
+  bold:
+    # family: "HackGen Console"
+    family: RictyDiminished NF
+    # family: "Ricty Nerd Font"
+  italic:
+    # family: HackGen Console
+    family: RictyDiminished NF
+    # family: "Ricty Nerd Font"
+
+
+draw_bold_text_with_bright_colors: true
+
+
+# Colors
+colors:
+  # Default colors
+  primary:
+    background: '0x000000'
+    foreground: '0xffffff'
+  cursor:
+    text: '0xF81CE5'
+    cursor: '0xffffff'
+
+  # Normal colors
+  normal:
+    black:   '0x000000'
+    red:     '0xfe0100'
+    # red:     '0xdc143c'
+    # green:   '0x33ff00'
+    green:   '0x00ff00'
+    # yellow:  '0xfeff00'
+    yellow:  '0xffff00'
+    # blue:    '0x0066ff'
+    blue:    '0x00bfff'
+    magenta: '0xcc00ff'
+    cyan:    '0x00ffff'
+    white:   '0xd0d0d0'
+
+  # Bright colors
+  bright:
+    black:   '0x808080'
+    red:     '0xfe0100'
+    green:   '0x33ff00'
+    yellow:  '0xfeff00'
+    blue:    '0x0066ff'
+    magenta: '0xcc00ff'
+    cyan:    '0x00ffff'
+    white:   '0xFFFFFF'
+ 
+background_opacity: 0.9
+
+mouse_bindings:
+  - { mouse: Right, action: Copy }
+  - { mouse: Right, mods: Shift, action: Paste }
+
+key_bindings:
+  - { key: Space, mods: Control, chars: "\x00"}
+  # c-/が効かない問題
+  - { key: Slash, mods: Control, chars: "\x1f"}
+  - { key: C, mods: Alt, action: Copy}
+  - { key: V, mods: Alt, action: Paste}
+
+
+hints:
+  enabled:
+  - regex: "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)\
+           [^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"
+    command: xdg-open
+    post_processing: true
+    mouse:
+     enabled: false 
+     mods: None
+
