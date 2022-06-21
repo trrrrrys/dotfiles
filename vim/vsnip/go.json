@@ -95,6 +95,10 @@
 		"prefix": ["wrf"],
 		"body": ["func $1(w http.ResponseWriter, r *http.Request) {", "\t$0", "}"]
 	},
+	"import go-sql-driver/mysql": {
+		"prefix": ["importmysql"],
+		"body": ["_ \"github.com/go-sql-driver/mysql\""]
+	},
 	"mysqltmpl": {
 		"prefix": ["mysqltmpl"],
 		"body": [
@@ -104,6 +108,7 @@
 			"\terr = db.Ping()",
 			"}",
 			"if err != nil {",
+			"\tdb.Close()",
 			"\t",
 			"}",
 			"db.SetMaxIdleConns(20)",
@@ -199,6 +204,10 @@
 			"\t}",
 			"}"
 		]
+	},
+	"fmt.Errorf": {
+		"prefix": ["fe"],
+		"body": ["fmt.Errorf(\"$1: %v\\n\", $1)$0"]
 	},
 	"todot": {
 		"prefix": "todot",
