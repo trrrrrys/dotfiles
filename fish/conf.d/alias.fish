@@ -1,10 +1,15 @@
 
 # macOS
-# alias readlink="greadlink "
-
-alias ls="ls --color=auto -G"
-alias lh='ls --color=auto -alh'
-alias ll='ls --color=auto -al'
+if [ "$(uname)" = 'Darwin' ]
+	alias readlink="greadlink "
+	alias ls="ls -G"
+	alias lh='ls -alh'
+	alias ll='ls -al'
+else
+	alias ls="ls --color=auto -G"
+	alias lh='ls --color=auto -alh'
+	alias ll='ls --color=auto -al'
+end
 
 alias rm='rm -i'
 alias cp='cp -i'
