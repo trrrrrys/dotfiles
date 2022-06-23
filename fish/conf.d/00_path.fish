@@ -1,7 +1,9 @@
 
-set GOPATH $HOME/go
-set GO111MODULE on
-set GOMAXPROCS 1
+set -x GOPATH $HOME/go
+set -x GO111MODULE on
+set -x GOMAXPROCS 1
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # TODO: MANPATH の設定
 set PATH \
@@ -14,7 +16,9 @@ set PATH \
 	$HOME/.nodenv/bin \
 	# $HOME/$PYENV_ROOT/bin \
 	$HOME/.cargo/bin \
+	/opt/homebrew/opt/mysql-client/bin \
 	$PATH
+
 
 set CLOUDSDK_PYTHON /usr/bin/python2.7
 source (nodenv init - | psub)
