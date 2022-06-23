@@ -32,8 +32,10 @@ hi PmenuSel ctermfg=black ctermbg=white
 highlight lspReference ctermbg=darkgray
 
 let g:lsp_document_code_action_signs_enabled = 0
-au FileType go,rust,vim,python,typescript,typescriptreact,rust call s:configure_lsp()
+au FileType go,rust,vim,python,typescript,typescriptreact,rust,php,terraform call s:configure_lsp()
+let g:lsp_settings_filetype_go = ['gopls', 'golangci-lint-langserver']
 
+" gopls 設定 https://github.com/golang/tools/blob/master/gopls/doc/settings.md
 let g:lsp_settings = {
 			\		'gopls': {
 			\			'initialization_options': {
@@ -43,6 +45,7 @@ let g:lsp_settings = {
 			\				'completionDocumentation': v:true,
 			\				'analyses': {
 			\					'fillstruct': v:true,
+			\					'staticcheck': v:true,
 			\				},
 			\				'matcher': 'fuzzy',
 			\				'codelenses': {
@@ -51,26 +54,38 @@ let g:lsp_settings = {
 			\					'tidy': v:true,
 			\					'vendor': v:false,
 			\				},
-			\				'hoverKind': 'SingleLine', 
+			\				'hoverKind': 'SynopsisDocumentation', 
+			\				'linksInHover': v:false, 
 			\				'deepCompletion': v:true, 
+			\			},
+			\		},
+			\		'golangci-lint-langserver': { 
+			\			'initialization_options': {
+			\				'command': [
+			\					'golangci-lint', 'run', 
+			\					'--out-format',
+			\					'json'
+			\				]
 			\			},
 			\		},
 			\		'pyls-all': { 'disabled': 1 },
 			\		'typescript-language-server': { 'disabled': 1 },
-			\ }			
+			\	}
+
+" \				'hoverKind': 'SingleLine', 
 function! s:configure_lsp() abort
-  setlocal omnifunc=lsp#complete   " オムニ補完を有効化
+	setlocal omnifunc=lsp#complete   " オムニ補完を有効化
 	setlocal signcolumn=yes
-  nnoremap <buffer> <C-]> :<C-u>LspDefinition<CR>
-  nnoremap <buffer> g<C-]> :<C-u>LspReferences<CR>
-  nnoremap <buffer> gs :<C-u>LspDocumentSymbol<CR>
-  nnoremap <buffer> gS :<C-u>LspWorkspaceSymbol<CR>
-  nnoremap <buffer> gQ :<C-u>LspDocumentFormat<CR>
-  vnoremap <buffer> gQ :LspDocumentRangeFormat<CR>
-  nnoremap <buffer> K :<C-u>LspHover<CR>
-  nnoremap <buffer> gC :<C-u>LspCodeAction<CR>
-  nnoremap <buffer> gi :<C-u>LspImplementation<CR>
-  nnoremap <buffer> gr :<C-u>LspRename<CR>
+	nnoremap <buffer> <C-]> :<C-u>LspDefinition<CR>zz
+	nnoremap <buffer> g<C-]> :<C-u>LspReferences<CR>
+	nnoremap <buffer> gs :<C-u>LspDocumentSymbol<CR>
+	nnoremap <buffer> gS :<C-u>LspWorkspaceSymbol<CR>
+	nnoremap <buffer> gQ :<C-u>LspDocumentFormat<CR>
+	vnoremap <buffer> gQ :LspDocumentRangeFormat<CR>
+	nnoremap <buffer> K :<C-u>LspHover<CR>
+	nnoremap <buffer> gC :<C-u>LspCodeAction<CR>
+	nnoremap <buffer> gi :<C-u>LspImplementation<CR>
+	nnoremap <buffer> gr :<C-u>LspRename<CR>
 	augroup autoformat
 		autocmd!
 		autocmd BufWritePre *.py,*.rs call execute('LspDocumentFormatSync')

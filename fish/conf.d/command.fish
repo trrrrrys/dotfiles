@@ -7,7 +7,6 @@ function cip -d "get current ip address"
 	end
 	switch $argv[1]
 		case "-*"
-
 			curl $argv ifconfig.io
 		case "*"
 			# default ipv4
@@ -42,6 +41,22 @@ function gcd
 	end
 end
 
+function gcdh
+	set -l cl (commandline)
+	type ghq peco 1> /dev/null
+	if [ $status != 0 ]
+		return 1
+	end
+	set -l _path 
+	ls -d ~/ghq/*/* | peco | read _path
+	if [ $_path ]
+		cd $_path
+		commandline ''
+		commandline -f repaint
+	end
+end
+
+
 function ctrlp
 	set -l cl (commandline)
 	set -l _path
@@ -73,5 +88,17 @@ function ctrlp
 	if [ $_path ]
 		commandline "cd "$_path
 		commandline -f repaint
+	end
+end
+
+function dotenv
+	set -l fp .env
+	if test (count $argv) -ge 1
+		set fp $argv[1]
+	end
+	if test -r $fp
+		for line in (cat $fp)
+			eval (echo set -gx (echo $line | sed "s/=/ /g"))
+		end
 	end
 end
