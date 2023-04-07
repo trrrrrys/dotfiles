@@ -1,0 +1,14 @@
+
+# stash
+bind stash S ?git stash push -u -m "%(prompt Enter stash comment: )"
+# stash pop
+bind stash P ?git stash pop %(stash)
+
+# ファイル削除
+bind status D @?rm %(file)
+# Resore
+bind status R @?git restore "%(file)"
+# リロード
+bind status <Ctrl-R> refresh
+# git-cz
+bind generic Z      !git cz
