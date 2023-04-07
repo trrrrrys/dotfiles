@@ -1,4 +1,3 @@
-
 setopt no_beep  # 補完候補がないときなどにビープ音を鳴らさない。
 setopt no_nomatch # git show HEAD^とかrake foo[bar]とか使いたい
 setopt prompt_subst  # PROMPT内で変数展開・コマンド置換・算術演算を実行
