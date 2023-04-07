@@ -4,7 +4,8 @@ func_prefix="init_"
 
 function init_zsh() {
 	# zplug install
-	if [ -z `command -v zplug` ]; then
+	if ! [ -d  ~/.zplug ]; then
+		echo "install zplug"
 		curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh;
 	fi
 	# create symbolic link 
