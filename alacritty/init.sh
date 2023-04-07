@@ -1,11 +1,10 @@
 #!/bin/bash
-# MaxOS
-configFile=$(cd $(dirname $0) && pwd)/alacrity.yaml;
+configFile=$(cd $(dirname $0) && pwd)/alacritty.yaml;
+# macOS
 if [ `uname` = "Darwin" ]; then
-	echo "mac init";
-	configFile=$(cd $(dirname $0) && pwd)/alacrity_darwin.yaml;
+	configFile=$(cd $(dirname $0) && pwd)/alacritty_darwin.yml;
 fi
 
 configPath=$HOME/.config/alacritty/
 mkdir -p $configPath
-ln -sf $configFile/alacritty.yml $configPath/alacritty.yml
+ln -sf $configFile $configPath/alacritty.yml
