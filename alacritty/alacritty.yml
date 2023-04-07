@@ -7,21 +7,21 @@ scrolling:
   history: 0
 
 font:
-  size: 14
+  size: 16
   normal:
     # family: "HackGen Console"
     # family: Ricty Nerd Font Diminished
-    family: RictyDiminished NF
-    # family: "Ricty Nerd Font"
+    # family: RictyDiminished NF
+    family: "Ricty Nerd Font"
     # style: regular
   bold:
     # family: "HackGen Console"
-    family: RictyDiminished NF
-    # family: "Ricty Nerd Font"
+    # family: RictyDiminished NF
+    family: "Ricty Nerd Font"
   italic:
     # family: HackGen Console
-    family: RictyDiminished NF
-    # family: "Ricty Nerd Font"
+    # family: RictyDiminished NF
+    family: "Ricty Nerd Font"
 
 
 draw_bold_text_with_bright_colors: true
@@ -40,7 +40,8 @@ colors:
   # Normal colors
   normal:
     black:   '0x000000'
-    red:     '0xfe0100'
+    red:     '0xee0000'
+    # red:     '0xfe0100'
     # red:     '0xdc143c'
     # green:   '0x33ff00'
     green:   '0x00ff00'
@@ -62,8 +63,9 @@ colors:
     magenta: '0xcc00ff'
     cyan:    '0x00ffff'
     white:   '0xFFFFFF'
- 
-background_opacity: 0.9
+
+window:
+    opacity: 0.9
 
 mouse_bindings:
   - { mouse: Right, action: Copy }
