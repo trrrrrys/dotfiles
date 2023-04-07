@@ -2,7 +2,7 @@
 # zmodload zsh/zprof && zprof
 
 # load config
-for cf in $(find $(dirname $(greadlink -f ~/.zshrc))"/config" -type f -name "*");
+for cf in $(find $(dirname $(readlink -f ~/.zshrc))"/config" -type f -name "*");
 do
 	source $cf;
 done

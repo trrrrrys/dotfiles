@@ -32,6 +32,7 @@ setopt mark_dirs   # globでパスを生成したときに、パスがディレ�
 setopt numeric_glob_sort  # 辞書順ではなく数字順に並べる。
 setopt magic_equal_subst  # コマンドライン引数の --prefix=/usr とか=以降でも補完
 setopt always_last_prompt  # 無駄なスクロールを避ける
+setopt noflowcontrol
 
 setopt IGNOREEOF # ctrl+dでのログアウトを防ぐ
 

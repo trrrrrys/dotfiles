@@ -24,3 +24,5 @@ fi
 zplug load
 
 autoload -U colors && colors
+
+
