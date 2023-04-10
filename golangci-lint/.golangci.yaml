@@ -1,0 +1,32 @@
+run:
+  go: 1.19
+  skip-dirs:
+    - vendor
+    - docker
+    - "^bazel"
+linters:
+  disable-all: true
+  enable:
+    - unused
+    - errcheck
+    - gosimple
+    - govet
+    - staticcheck
+    - stylecheck
+    - ineffassign
+    - typecheck
+    - thelper
+    - misspell
+    - gofmt
+
+linters-settings:
+  stylecheck:
+    checks:
+      - all
+      - "-ST1000"
+issues:
+  exclude-use-default: false 
+  exclude-rules:
+    - linters:
+        - stylecheck
+      text: "ST1003: should not use underscores in package names" 
