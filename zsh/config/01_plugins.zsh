@@ -1,9 +1,11 @@
-fpath=(/usr/local/share/zsh/functions ${fpath})
+#!/usr/bin/env zsh
+
+fpath=(/usr/share/zsh/$ZSH_VERSION/functions ${fpath})
 # zplug
 source ~/.zplug/init.zsh
 # 補完
 zplug 'zsh-users/zsh-completions'
-# 
+zplug 'zchee/zsh-completions'
 zplug 'zsh-users/zaw'
 # 
 zplug 'zsh-users/zsh-syntax-highlighting', defer:2

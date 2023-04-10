@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 
 if [ "$(uname)" = 'Darwin' ]; then
 	alias readlink="greadlink "
