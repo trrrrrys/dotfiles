@@ -8,7 +8,7 @@
 		"body": ["package $0"]
 	},
 	"imports": {
-		"prefix": ["ims"],
+		"prefix": ["ims", "imports"],
 		"body": ["import (", "\t$0", ")"]
 	},
 	"sq \"github.com/Masterminds/squirrel\"": {
@@ -47,9 +47,21 @@
 		"prefix": ["panicerr"],
 		"body": ["if err != nil {", "\tpanic(err)", "}$0"]
 	},
-	"meth": {
+	"if err != nil ": {
+		"prefix": ["ife"],
+		"body": ["if err != nil {", "\t$0", "}"]
+	},
+	"if err := func(); err != nil ": {
+		"prefix": ["ifefv"],
+		"body": ["if err := ${1:func()}; err != nil {", "\t$2", "}$0"]
+	},
+	"method": {
 		"prefix": ["meth"],
 		"body": ["func (${1}) ${2:Method}($3) $4 {", "\t$5", "}"]
+	},
+	"method String()": {
+		"prefix": ["methstring"],
+		"body": ["func (${1}) String() string {", "\t$2", "}"]
 	},
 	"fmt.Println(\"\")": {
 		"prefix": ["fn\""],
@@ -62,6 +74,10 @@
 	"fmt.Printf": {
 		"prefix": ["ff"],
 		"body": ["fmt.Printf(\"$1: %v\\n\", $1)$0"]
+	},
+	"fmt.Fprintf": {
+		"prefix": ["ffp"],
+		"body": ["fmt.Fprintf(os.Stdout, \"$1: %v\\n\", $1)$0"]
 	},
 	"log.Println()": {
 		"prefix": ["ln"],
@@ -78,6 +94,10 @@
 	"json": {
 		"prefix": ["json"],
 		"body": ["`json:\"$1\"`"]
+	},
+	"yaml": {
+		"prefix": ["yaml"],
+		"body": ["`yaml:\"$1\"`"]
 	},
 	"func": {
 		"prefix": ["func"],
@@ -122,7 +142,7 @@
 	"table test": {
 		"prefix": ["tt"],
 		"body": [
-			"var tests = []struct {",
+			"tests := []struct {",
 			"\tname string",
 			"\tin string",
 			"\texpect string",
@@ -132,7 +152,6 @@
 			"for _, tt := range tests {",
 			"\ttt := tt",
 			"\tt.Run(tt.name, func(t *testing.T){",
-			"\t\t// get value",
 			"\t\tgot, err := f()",
 			"\t\tif err != nil {",
 			"\t\t\tt.Fatalf(\"error: %+v\", err)",
@@ -157,7 +176,6 @@
 			"for _, tt := range tests {",
 			"\ttt := tt",
 			"\tt.Run(tt.name, func(t *testing.T){",
-			"\t\t// get value",
 			"\t\tgot, err := f()",
 			"\t\tif err != nil {",
 			"\t\t\tt.Fatalf(\"error: %+v\", err)",
@@ -182,7 +200,39 @@
 			"for _, tt := range tests {",
 			"\ttt := tt",
 			"\tt.Run(tt.name, func(t *testing.T){",
-			"\t\t// get value",
+			"\t\tgot, err := f()",
+			"\t\tif err != nil {",
+			"\t\t\tt.Fatalf(\"error: %+v\", err)",
+			"\t\t}",
+			"\tif !reflect.DeepEqual(tt.expect, got) {",
+			"\t\t\tt.Errorf(cmp.Diff(tt.expect, got))",
+			"\t}",
+			"\t})",
+			"}"
+		]
+	},
+	"table test (salon version)": {
+		"prefix": ["ttsalon"],
+		"body": [
+			"type in struct {",
+			"\t",
+			"}",
+			"type want struct {",
+			"\terr error",
+			"}",
+			"var tests = []struct {",
+			"\tname string",
+			"\tin in",
+			"\twant want",
+			"\texpectErr bool",
+			"\tprepare func()",
+			"\t}{",
+			"{$1},",
+			"}",
+			"for _, tt := range tests {",
+			"\ttt := tt",
+			"\tt.Run(tt.name, func(t *testing.T){",
+			"\t\ttt.prepare()",
 			"\t\tgot, err := f()",
 			"\t\tif err != nil {",
 			"\t\t\tt.Fatalf(\"error: %+v\", err)",
@@ -207,13 +257,72 @@
 	},
 	"fmt.Errorf": {
 		"prefix": ["fe"],
-		"body": ["fmt.Errorf(\"$1: %v\\n\", $1)$0"]
+		"body": ["fmt.Errorf(\"$1: %v\", err)$0"]
 	},
 	"todot": {
 		"prefix": "todot",
 		"body": [
 			"// ${VIM:system('python -c \"import sys;from datetime import datetime as dt;sys.stdout.write(str(dt.now()))\"')}",
 			"// TODO: $0"
+		]
+	},
+	"trace": {
+		"prefix": "os.trace", 
+		"body": [
+			"f, err := os.Create(\"trace.out\")",
+			"if err != nil {",
+			"	log.Fatal(err)",
+			"}",
+			"defer f.Close()",
+			"trace.Start(f)",
+			"defer trace.Stop()"
+		]
+	},
+	"fmt.Sprintf": {
+		"prefix": "fs",
+		"body": [
+			"fmt.Sprintf(\"%s\", $1)"
+		]
+	},
+	"pprof": {
+		"prefix": "httppprof",
+		"body": [
+			"\tgo func(){",
+			"\t\tlog.Println(http.ListenAndServe(\"127.0.0.1:6060\", nil))",
+			"\t}()"
+		]
+	},
+	"loginit": {
+		"prefix": "loginit",
+		"comment": "ログにLshortfileフラグをsetする",
+		"body": [
+			"func init(){",
+			"\tlog.SetFlags(log.Lshortfile)",
+			"}"
+		]
+	},
+	"vars": {
+		"prefix": ["vars"],
+		"body": [
+			"var (",
+			"\t$1",
+			")"
+		]
+	},
+	"cliboiler": {
+		"prefix": "cliboilerplate",
+		"comment": "cli tool boilerplate",
+		"body": [
+			"func main() {",
+			"\tif err := run(); err != nil {",
+			"\t\tfmt.Fprintf(os.Stdout, \"Error: %v\\n\", err)",
+			"\t\tos.Exit(1)",
+			"\t}",
+			"}",
+			"",
+			"func run() error {",
+			"\treturn nil",
+			"}"
 		]
 	}
 }

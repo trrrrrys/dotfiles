@@ -16,7 +16,6 @@ Plug 'prabirshrestha/vim-lsp'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'mattn/vim-lsp-settings'
-Plug 'mattn/vim-goimports'
 
 " snipets
 Plug 'hrsh7th/vim-vsnip'
@@ -41,21 +40,25 @@ Plug 'vim-scripts/surround.vim'
 " 選択箇所をpng化する
 Plug 'segeljakt/vim-silicon'
 
+" Plug 'mattn//vim-goimports'
+
 " yapf
 Plug 'mindriot101/vim-yapf'
 
+" editorconfig
+Plug 'editorconfig/editorconfig-vim'
 
-" pretter
+" prettier
 Plug 'prettier/vim-prettier', {
-  \ 'do': 'yarn install',
+  \ 'do': 'npm install',
   \ 'for': ['javascript', 'typescript', 'typescriptreact', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html']
   \ }
 
-" TODO: syntax のみ利用したい
-Plug 'leafgarland/typescript-vim'
+" Plug 'sheerun/vim-polyglot'
 
-Plug 'vim-denops/denops.vim'
+" Plug 'vim-denops/denops.vim'
+" Plug 'trrrrrys/switchb'
+Plug 'hashivim/vim-terraform' , { 'for': 'terraform'}
+Plug 'mattn/vim-maketable'
 
 call plug#end()
-
-

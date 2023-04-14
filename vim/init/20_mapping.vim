@@ -3,7 +3,7 @@ let mapleader="\<Space>"
 
 " ESC連打でハイライト解除
 " nnoremap <esc><esc> :nohlsearch<CR><esc>
-nnoremap <silent><C-c><C-c> :nohlsearch<CR><esc>
+nnoremap <silent> <C-c><C-c> :nohlsearch<CR><esc>
 
 " 折り返し時に表示行単位での移動できるようにする
 nnoremap <silent> j gj
@@ -48,9 +48,6 @@ nnoremap sQ :<C-u>bd<CR>
 inoremap {<Enter> {}<Left><CR><ESC><S-o>
 inoremap [<Enter> []<Left><CR><ESC><S-o>
 inoremap (<Enter> ()<Left><CR><ESC><S-o>
-inoremap {<C-j> {}<Left><CR><ESC><S-o>
-inoremap [<C-j> []<Left><CR><ESC><S-o>
-inoremap (<C-j> ()<Left><CR><ESC><S-o>
 
 nnoremap <expr> sr ':%s/' . expand('<cword>') . '/'
 vnoremap <expr> sr ':%s/' . expand('<cword>') . '/'
@@ -87,24 +84,47 @@ inoremap <C-l> <Nop>
 nnoremap H <Nop>
 nnoremap L <Nop>
 
+nnoremap Y y$
+nnoremap <silent> <Leader>o o<esc>
+
+
 " replace paste 時にレジスタに格納しない
 vnoremap p "_dP
 
-nnoremap <silent><expr> * v:count ? '*'
-			\ : ':sil exe "keepj norm! *" <Bar> call winrestview(' . string(winsaveview()) . ')<CR>'
+" nnoremap <silent><expr> * v:count ? '*'
+" 			\ : ':sil exe "keepj norm! *" <Bar> call winrestview(' . string(winsaveview()) . ')<CR>'
+
+nnoremap <silent> * yiw/<C-R>"<CR>N
+vnoremap <silent> * y/<C-R>"<CR>N
 
 " qfで <CR>押下で qf windowを閉じながら移動する
 " let g:qf_disle_statusline = 1
 augroup QuickFixWindow
 	autocmd!
-	autocmd FileType qf nnoremap <buffer><silent> <CR> <CR>:<C-u>ccl<CR>
-	autocmd FileType qf nnoremap <buffer><silent> <esc> :<C-u>ccl<CR>
-	autocmd FileType qf nnoremap <buffer><Up> <Nop>
-	autocmd FileType qf nnoremap <buffer><Down> <Nop>
-	autocmd FileType qf nnoremap <buffer><Left> <Nop>
-	autocmd FileType qf nnoremap <buffer><Right> <Nop>
+	au FileType qf call s:qf_mapping()
 augroup END
 
-autocmd VimEnter * imap <Nul> <c-cpace>
+function! s:qf_mapping() abort
+	nnoremap <buffer><silent> <CR> <CR>:<C-u>ccl<CR>
+	nnoremap <buffer><silent> <esc> :<C-u>ccl<CR>
+	nnoremap <buffer><silent> <C-c> :<C-u>ccl<CR>
+	nnoremap <buffer><silent> q :<C-u>ccl<CR>
+	nnoremap <buffer><Up> <Nop>
+	nnoremap <buffer><Down> <Nop>
+	nnoremap <buffer><Left> <Nop>
+	nnoremap <buffer><Right> <Nop>
+	nnoremap <buffer><silent> <CR> <CR>:<C-u>ccl<CR>
+endfunction
 
-" wsl用
+autocmd VimEnter * imap <Nul> <c-space>
+
+" snake to camel
+" vnoremap sc 
+
+function! SynGroupUnderCursor()
+  let l:current_syntax_id = synID(line('.'), col('.'), 0)
+  let l:current_group_name = synIDattr(l:current_syntax_id, 'name')
+  echo l:current_group_name
+endfunction
+
+nnoremap <silent> sg :<c-u>call SynGroupUnderCursor()<CR>

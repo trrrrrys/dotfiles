@@ -1,4 +1,8 @@
 " " カラーテーマ
+autocmd ColorScheme * highlight Normal ctermbg=none
+autocmd ColorScheme * highlight LineNr ctermbg=none
+" autocmd ColorScheme * highlight EndOfBuffer ctermbg=none
+autocmd ColorScheme * highlight NonText ctermbg=none
 colorscheme monokai
 
 " vim-airline

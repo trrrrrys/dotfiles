@@ -26,3 +26,14 @@ endfunction
 nnoremap <silent> sd :call Ambiguousud()<cr>
 vnoremap <silent> sd :call VisualAmbiguousud()<cr>
 
+command! -nargs=1 EditCommand :call EditCommand(<q-args>)
+function! EditCommand(cmd) abort
+	new 
+	setlocal buftype=nofile
+ 	redir @a
+	silent execute a:cmd
+	redir END
+	put a
+endfunction
+
+

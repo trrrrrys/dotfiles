@@ -2,8 +2,6 @@
 " 言語別の設定
 " ===================
 
-" Tab文字を半角スペースにする
-au FileType python set expandtab
 " 行頭以外のTab文字の表示幅（スペースいくつ分）
 set tabstop=2
 au FileType python,go set tabstop=4
@@ -23,5 +21,15 @@ augroup END
 
 " autocmd TextChanged,InsertLeave *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
 
-" vimgrep時に自動でqfウィンドウで開く
-" autocmd QuickFixCmdPost *grep* cwindow
+" vimgrep時に自動でqfウィンドウで開く 
+autocmd QuickFixCmdPost *grep* cwindow
+
+augroup TabSettings
+	autocmd!
+	" ソフトタブ
+	au FileType python,proto,sh setlocal expandtab 
+	" タブ表示幅
+	au FileType proto,sh setlocal shiftwidth=2
+	au FileType python,go setlocal shiftwidth=4
+	au FileType python,go setlocal tabstop=4
+augroup END
