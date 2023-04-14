@@ -14,6 +14,10 @@ function init_zsh() {
 	fi
 }
 
+function init_golangcilint() {
+	ln -sf `pwd`/golangci-lint/.golangci.yaml $HOME/
+}
+
 func_list=`
 	grep -Eo 'function [a-zA-Z0-9_]+ *\(\)' "$0" | \
  		sed -E 's/function? //; s/ *\(\)//'
