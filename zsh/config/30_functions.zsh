@@ -46,7 +46,7 @@ gcd() {
     done
     _path=$(eval $_cmd | peco)
   else
-    _path=$(ghq list --full-path | peco)
+    _path=$(ghq list | peco)
   fi
 
   if [[ -n $_path ]]; then
@@ -60,18 +60,18 @@ gcdh() {
 	local _path 
 	ls -d `ghq root`/*/* | sed "s,$HOME,~,g" | peco | read _path
   if [[ -n $_path ]]; then
-    cd $_path
+		cd `ghq root`/$_path
   fi
 }
 
 _zle_gcd() {
 	local _path
   type ghq peco 1> /dev/null || return 1
-  _path=$(ghq list --full-path | peco)
+  _path=$(ghq list | peco)
 	zle accept-and-hold
   if [[ -n $_path ]]; then
 		BUFFER=""
-		cd $_path
+		cd `ghq root`/$_path
   fi
 }
 

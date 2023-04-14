@@ -4,21 +4,22 @@
 # zmodload zsh/zprof && zprof
 export ZSHDIR="${HOME}/.zsh"
 # load config
-for cf in $(find $(dirname $(readlink -f ~/.zshrc))"/config" -type f -name "*" | sort);
+for cf in $(find $(dirname $(readlink -f ~/.zshrc))"/config" -type f -name "*.zsh" | sort);
 do
 	source $cf;
 done
 
-if [ $SHLVL = 1 ]; then
+if [[ $SHLVL = 1 ]]; then
 	# tmux session name
 	SESSIONNAME="trrrrrys"
 	tmux has-session -t $SESSIONNAME &> /dev/null
-	if [ $? != 0 ]; then
-		tmux new-session -s $SESSIONNAME -n script -d;
-		tmux send-keys -t $SESSIONNAME "~/bin/script" C-m;
-		tmux run-shell /home/trrrrrys/.tmux/plugins/tmux-resurrect/scripts/restore.sh;
+	if [[ $? != 0 ]]; then
+		tmux new-session -s $SESSIONNAME -d;
+		tmux run-shell ~/.tmux/plugins/tmux-resurrect/scripts/restore.sh;
+		tmux send-key c-m;
+	else 
+		tmux a -t $SESSIONNAME;
 	fi
-	tmux a -t $SESSIONNAME;
 fi
 
 if ! [[ -z `command -v zprof` ]] ;then

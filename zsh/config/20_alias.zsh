@@ -37,5 +37,8 @@ alias ctmuxs="tmux ls -F \"#S\" | peco | xargs tmux kill-session -t"
 alias ndselect="ndenv version --bare | peco | xargs ndenv global"
 alias pip="python3 -m pip "
 
-# TODO: 色つけたり、改行してみやすくしたりする
 alias todolist="find . -type d -name .git -prune -o -type d -name 'node_modules*' -prune -o -type f -print | xargs grep -n 'TODO'"
+
+# Docker関連
+alias dlog="docker ps --format '{{.Names}}' | peco | xargs docker logs -f"
+alias drm="docker ps -a --format '{{.Names}}' | peco | xargs docker rm -f"

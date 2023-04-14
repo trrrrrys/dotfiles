@@ -5,13 +5,11 @@ fpath=(/usr/share/zsh/$ZSH_VERSION/functions ${fpath})
 source ~/.zplug/init.zsh
 # 補完
 zplug 'zsh-users/zsh-completions'
+
 zplug 'zchee/zsh-completions'
 zplug 'zsh-users/zaw'
-# 
 zplug 'zsh-users/zsh-syntax-highlighting', defer:2
-# 
 zplug 'zsh-users/zsh-autosuggestions'
-# 
 zplug "mafredri/zsh-async", from:"github", use:"async.zsh"
 zplug check || zplug install
 
@@ -26,5 +24,5 @@ fi
 zplug load
 
 autoload -U colors && colors
-
-
+typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[path]='fg=cyan,underline'
