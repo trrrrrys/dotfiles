@@ -134,3 +134,10 @@ sif() {
 							print \
 						}'
 }
+
+setenv-awscredential() {
+	local profile=`aws configure list-profiles | peco`
+	echo $profile
+	export AWS_ACCESS_KEY_ID=`aws --profile $profile configure get aws_access_key_id`
+	export AWS_SECRET_ACCESS_KEY=`aws --profile $profile configure get aws_secret_access_key`
+}

@@ -16,10 +16,8 @@ if [[ $SHLVL = 1 ]]; then
 	if [[ $? != 0 ]]; then
 		tmux new-session -s $SESSIONNAME -d;
 		tmux run-shell ~/.tmux/plugins/tmux-resurrect/scripts/restore.sh;
-		tmux send-key c-m;
-	else 
-		tmux a -t $SESSIONNAME;
 	fi
+	tmux a -t $SESSIONNAME;
 fi
 
 if ! [[ -z `command -v zprof` ]] ;then
