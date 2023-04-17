@@ -15,5 +15,5 @@ path=(
 	/opt/homebrew/opt/redis@6.2/bin
 	$path
 )
-# asdf
-source `brew --prefix asdf`/libexec/asdf.sh
+# rtx
+type rtx 1> /dev/null && source <(rtx activate zsh)
