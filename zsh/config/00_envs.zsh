@@ -15,5 +15,9 @@ path=(
 	/opt/homebrew/opt/redis@6.2/bin
 	$path
 )
+
+export EDITOR="vim"
+export MANPAGER="col -b -x|vim -R -c 'set ft=man nolist nomod noma' -"
+
 # rtx
 type rtx 1> /dev/null && source <(rtx activate zsh)

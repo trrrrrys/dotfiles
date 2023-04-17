@@ -74,9 +74,7 @@ _zle_gcd() {
 		cd `ghq root`/$_path
   fi
 }
-
 zle -N _zle_gcd
-bindkey '^g' _zle_gcd
 
 # typescriptの初期化系
 tsinit() {
@@ -136,8 +134,3 @@ sif() {
 							print \
 						}'
 }
-
-# SIGINT をキャッチできる
-# function TRAPINT {
-#
-# }

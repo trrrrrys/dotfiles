@@ -42,3 +42,9 @@ alias todolist="find . -type d -name .git -prune -o -type d -name 'node_modules*
 # Docker関連
 alias dlog="docker ps --format '{{.Names}}' | peco | xargs docker logs -f"
 alias drm="docker ps -a --format '{{.Names}}' | peco | xargs docker rm -f"
+
+# alias localaws="aws --profile localstack --endpoint=http://localhost:4566"
+
+# gh
+# alias propen="gh pr view --web"
+# alias prview="gh pr view --web"
