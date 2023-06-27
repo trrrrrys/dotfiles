@@ -4,6 +4,7 @@ if has("multi_lang")
 endif
 
 set fenc=utf-8
+set encoding=utf-8
 
 " バックアップファイルを作らない
 set nobackup

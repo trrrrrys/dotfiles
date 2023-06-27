@@ -17,6 +17,7 @@ path=(
 )
 
 export EDITOR="vim"
+export LANG=en_US.UTF-8
 export MANPAGER="col -b -x|vim -R -c 'set ft=man nolist nomod noma' -"
 
 # rtx
