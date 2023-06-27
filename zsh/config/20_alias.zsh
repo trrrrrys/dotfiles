@@ -23,6 +23,7 @@ alias relogin="exec $SHELL -l"
 
 alias sudo='sudo '
 alias v="vim "
+alias v.="vim ."
 alias vv="vim `greadlink -f ~/.vimrc | xargs dirname`"
 alias vz="vim `greadlink -f ~/.zshrc | xargs dirname`"
 alias sz="source ~/.zshrc"
@@ -43,8 +44,9 @@ alias todolist="find . -type d -name .git -prune -o -type d -name 'node_modules*
 alias dlog="docker ps --format '{{.Names}}' | peco | xargs docker logs -f"
 alias drm="docker ps -a --format '{{.Names}}' | peco | xargs docker rm -f"
 
-# alias localaws="aws --profile localstack --endpoint=http://localhost:4566"
+alias localaws='aws --profile localstack --endpoint="http://localhost:4566"'
 
 # gh
-# alias propen="gh pr view --web"
-# alias prview="gh pr view --web"
+alias ropen="gh open"
+alias propen="gh pr view --web"
+alias prview="gh pr view --web"

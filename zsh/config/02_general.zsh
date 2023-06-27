@@ -4,15 +4,6 @@ setopt no_beep  # 補完候補がないときなどにビープ音を鳴らさ�
 setopt no_nomatch # git show HEAD^とかrake foo[bar]とか使いたい
 setopt prompt_subst  # PROMPT内で変数展開・コマンド置換・算術演算を実行
 setopt transient_rprompt  # コマンド実行後は右プロンプトを消す
-setopt hist_ignore_dups   # 直前と同じコマンドラインはヒストリに追加しない
-setopt hist_ignore_all_dups  # 重複したヒストリは追加しない
-setopt hist_reduce_blanks
-setopt hist_no_store
-setopt hist_verify
-setopt share_history  # シェルのプロセスごとに履歴を共有
-setopt extended_history  # 履歴ファイルに時刻を記録
-setopt hist_expand  # 補完時にヒストリを自動的に展開する。
-setopt append_history  # 複数の zsh を同時に使う時など history ファイルに上書きせず追加
 setopt auto_cd  # ディレクトリ名だけで移動
 setopt auto_list  # 補完候補が複数ある時に、一覧表示
 setopt auto_menu  # 補完候補が複数あるときに自動的に一覧表示する
@@ -39,10 +30,27 @@ setopt IGNOREEOF # ctrl+dでのログアウトを防ぐ
 
 # n秒以上の処理の際にレポートを表示する
 REPORTTIME=10
+# man zshparam
+TIMEFMT="
+========================
+program : %J
+cpu     : %P
+user    : %*Us
+system  : %*Ss
+total   : %*Es
+========================"
 
 ### history 設定
 HISTFILE=~/.zsh/.zsh_historyx
 HISTSIZE=100000
 SAVEHIST=100000
+setopt append_history
+setopt share_history
+setopt extended_history
+setopt hist_ignore_dups 
+setopt hist_ignore_all_dups 
+setopt hist_ignore_space
 setopt hist_reduce_blanks
-setopt hist_save_no_dups
+setopt hist_no_store
+setopt hist_verify
+setopt hist_expand

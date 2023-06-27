@@ -1,5 +1,9 @@
 #!/usr/bin/env zsh
 
+fpath=($HOME/.zsh_completions/ ${fpath})
+
+autoload -Uz compinit
+compinit
 # 補完
 zstyle ':completion:*' format '%B%F{blue}%d%f%b'
 zstyle ':completion:*:default' menu select=2
@@ -9,8 +13,4 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z} r:|[._-]=*'
 zstyle ':completion:*' insert-tab false
 zstyle ':completion:*:sudo:*' command-path $path
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
-
-compdef _go go
-type zed 1> /dev/null && source <(zed completion zsh)
 zstyle ':completion:*:vim:*' completer _files
-
