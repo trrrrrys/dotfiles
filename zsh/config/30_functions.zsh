@@ -180,3 +180,25 @@ toggle-vi-mode() {
   fi
 }
 zle -N toggle-vi-mode
+
+
+docker-exec() {
+  local _container_id=`docker ps --format "{{.Names}}" | peco | xargs -I{} docker ps -a -q -f "name={}"`
+  local cmd="bash"
+  if [[ $# -ge 1 ]]; then
+    cmd=$@
+  fi
+  docker exec -it $_container_id $cmd
+}
+
+
+decode_jwt() {
+  local parts=("${(@s:.:)1}")
+  local result="${parts[2]}"
+  local len=$((${#result} % 4))
+  if [ $len -eq 1 ]; then result="$1"'==='
+  elif [ $len -eq 2 ]; then result="$1"'=='
+  elif [ $len -eq 3 ]; then result="$1"'='
+  fi
+  echo "$result" | tr '_-' '/+' | base64 -d | jq .
+}
