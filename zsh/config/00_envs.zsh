@@ -13,6 +13,7 @@ path=(
 	$HOME/.cargo/bin
 	/opt/homebrew/opt/mysql-client/bin
 	/opt/homebrew/opt/redis@6.2/bin
+  /opt/homebrew/opt/openjdk@11/bin
 	$path
 )
 
@@ -22,3 +23,12 @@ export MANPAGER="col -b -x|vim -R -c 'set ft=man nolist nomod noma' -"
 
 # rtx
 type rtx 1> /dev/null && source <(rtx activate zsh)
+source "$HOME/.cargo/env"
+
+# bun
+# bun completions
+[ -s "/Users/tsukahara-ryo/.bun/_bun" ] && source "/Users/tsukahara-ryo/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

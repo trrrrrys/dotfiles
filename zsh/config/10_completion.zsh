@@ -1,7 +1,5 @@
 #!/usr/bin/env zsh
 
-fpath=($HOME/.zsh_completions/ ${fpath})
-
 autoload -Uz compinit
 compinit
 # 補完

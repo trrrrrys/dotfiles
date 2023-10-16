@@ -35,18 +35,25 @@ alias now="date +%s"
 
 # kill selected tmux session
 alias ctmuxs="tmux ls -F \"#S\" | peco | xargs tmux kill-session -t"
-alias ndselect="ndenv version --bare | peco | xargs ndenv global"
 alias pip="python3 -m pip "
 
 alias todolist="find . -type d -name .git -prune -o -type d -name 'node_modules*' -prune -o -type f -print | xargs grep -n 'TODO'"
 
+alias du="dust"
+
 # Docker関連
 alias dlog="docker ps --format '{{.Names}}' | peco | xargs docker logs -f"
 alias drm="docker ps -a --format '{{.Names}}' | peco | xargs docker rm -f"
+alias dps="docker ps --format 'table {{.ID}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}'"
+alias composeup="find -E * -type f -maxdepth 1 -iregex '^(docker-)?compose.ya?ml$' | xargs yq e '.services | keys | .[]' | peco | xargs docker compose up -d"
 
 alias localaws='aws --profile localstack --endpoint="http://localhost:4566"'
 
 # gh
-alias ropen="gh open"
+alias ghopen="gh repo view --web"
 alias propen="gh pr view --web"
 alias prview="gh pr view --web"
+alias prdraft="gh pr create -a \"@me\" -d && gh pr view --web"
+
+# git
+alias cdgr="cd $(git rev-parse --show-toplevel)"

@@ -95,7 +95,6 @@ tsinit() {
   npm init --init-author-name="trrrrrys" --init-author-email="email=tsukahararu@gmail.com" -y
   mkdir -p src
   touch src/index.ts
-  npm set main
   npm install --save-dev typescript ts-node
   npm pkg set scripts.start="ts-node src/index.ts"
   npm pkg set main="src/index.ts"
@@ -104,7 +103,7 @@ tsinit() {
 # 検索
 search() {
   local search_directory="."
-  local excluded_patterns=()
+  local excluded_patterns=(".git" "node_modules")
   local search_keywords=()
 
   while (( $# > 0 )); do
@@ -159,28 +158,34 @@ setenv-awscredential() {
 
 dotenv() {
   local fp=".env"
-  # 引数をとった場合はデフォルトでgrepをかける
-  if [[ $# -ge 1 ]]; then
-    fp="$1"
-  fi
+  local is_unset=0
+  # 引数を受け取った場合は、その引数のファイルを読み込む
+  # 引数処理
+  while (( $# > 0 )); do
+    case $1 in
+      -u|--unset)
+        is_unset=1
+        shift
+        ;;
+      *)
+        fp="$1"
+        shift
+        ;;
+    esac
+  done
   if [[ -r "$fp" ]]; then
     while IFS= read -r line; do
-      if [[ ! -z $line ]]; then
-        eval "export $line"
+      if [[ ! -z $line ]] && [[ ! $line =~ ^# ]]; then
+        if (( $is_unset == 0 )); then
+          eval "export $line"
+        else
+          local _v=("${(@s/=/)line}")
+          eval "unset $_v[1]"
+        fi
       fi
     done < "$fp"
   fi
 }
-
-toggle-vi-mode() {
-  if [[ $KEYMAP == "vicmd" ]]; then
-    zle vi-insert
-  else
-    zle vi-cmd-mode
-  fi
-}
-zle -N toggle-vi-mode
-
 
 docker-exec() {
   local _container_id=`docker ps --format "{{.Names}}" | peco | xargs -I{} docker ps -a -q -f "name={}"`
@@ -191,14 +196,26 @@ docker-exec() {
   docker exec -it $_container_id $cmd
 }
 
-
-decode_jwt() {
+decode-jwt() {
   local parts=("${(@s:.:)1}")
   local result="${parts[2]}"
   local len=$((${#result} % 4))
-  if [ $len -eq 1 ]; then result="$1"'==='
-  elif [ $len -eq 2 ]; then result="$1"'=='
-  elif [ $len -eq 3 ]; then result="$1"'='
+  if [ $len -eq 1 ]; then result="$result"'==='
+  elif [ $len -eq 2 ]; then result="$result"'=='
+  elif [ $len -eq 3 ]; then result="$result"'='
   fi
   echo "$result" | tr '_-' '/+' | base64 -d | jq .
+}
+
+
+# vim-lsp-settingsのdenoを無効化する設定の作成
+create-vls-deno-disabled() {
+  mkdir .vim-lsp-settings
+  cat << EOF > .vim-lsp-settings/settings.json
+{
+  "deno": {
+    "disabled": true
+  }
+}
+EOF
 }

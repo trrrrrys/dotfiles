@@ -25,8 +25,8 @@ linters-settings:
       - all
       - "-ST1000"
 issues:
-  exclude-use-default: false 
+  exclude-use-default: false
   exclude-rules:
     - linters:
         - stylecheck
-      text: "ST1003: should not use underscores in package names" 
+      text: "ST1003: should not use underscores in package names"
