@@ -12,7 +12,7 @@
 		"body": ["import (", "\t$0", ")"]
 	},
 	"sq \"github.com/Masterminds/squirrel\"": {
-		"prefix": ["importsquirrel"],
+		"prefix": ["importsquirrel", "importsq"],
 		"body": ["sq \"github.com/Masterminds/squirrel\""]
 	},
 	"init": {
@@ -214,12 +214,14 @@
 	"table test (salon version)": {
 		"prefix": ["ttsalon"],
 		"body": [
-			"type in struct {",
-			"\t",
-			"}",
-			"type want struct {",
-			"\terr error",
-			"}",
+			"type (",
+      "\tin struct {",
+			"\t\t",
+			"\t}",
+			"\twant struct {",
+			"\t\terr error",
+			"\t}",
+			")",
 			"var tests = []struct {",
 			"\tname string",
 			"\tin in",
@@ -237,8 +239,8 @@
 			"\t\tif err != nil {",
 			"\t\t\tt.Fatalf(\"error: %+v\", err)",
 			"\t\t}",
-			"\tif !reflect.DeepEqual(tt.expect, got) {",
-			"\t\t\tt.Errorf(cmp.Diff(tt.expect, got))",
+			"\tif !cmp.Equal(tt.want, got) {",
+			"\t\t\tt.Errorf(cmp.Diff(tt.want, got))",
 			"\t}",
 			"\t})",
 			"}"
@@ -267,7 +269,7 @@
 		]
 	},
 	"trace": {
-		"prefix": "os.trace", 
+		"prefix": "os.trace",
 		"body": [
 			"f, err := os.Create(\"trace.out\")",
 			"if err != nil {",

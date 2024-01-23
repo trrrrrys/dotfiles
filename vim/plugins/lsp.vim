@@ -1,9 +1,13 @@
 
 " completeopt を自動設定しない
 let g:asyncomplete_min_chars = 2
-let g:asyncomplete_popup_delay = 200
+let g:asyncomplete_popup_delay = 300
+let asyncomplete_auto_popup = 0
 let asyncomplete_auto_completeopt = 0
 set completeopt=menuone,noinsert,noselect,popup
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+inoremap <expr> <cr> pumvisible() ? '<C-y>' : '<cr>'
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " set completepopup=align:menu,border:off
 set completepopup=border:off
@@ -26,6 +30,7 @@ let g:lsp_diagnostics_highlights_insert_mode_enabled = 0
 let g:lsp_diagnostics_highlights_delay = 500
 " 行番号左の表示
 let g:lsp_diagnostics_signs_enabled = 1
+" insert modeではLSPエラーを表示しない
 let g:lsp_diagnostics_signs_insert_mode_enabled = 0
 let g:lsp_diagnostics_signs_delay = 200
 " let g:lsp_diagnostics_signs_error = {'text': ''}
@@ -41,11 +46,13 @@ let g:lsp_diagnostics_virtual_text_insert_mode_enabled = 0
 " let g:lsp_diagnostics_virtual_text_prefix = ""
 let g:lsp_format_sync_timeout = 1000
 
+" let g:lsp_inlay_hints_enabled = 1
+
 " logging
-" let g:lsp_log_verbose = 0
-" let g:lsp_log_file = expand('~/tmp/vim-lsp.log')
-" let g:asyncomplete_log_file = expand('~/tmp/asyncomplete.log')
-"
+let g:lsp_log_verbose = 0
+let g:lsp_log_file = expand('~/tmp/vim-lsp.log')
+let g:asyncomplete_log_file = expand('~/tmp/asyncomplete.log')
+
 hi Pmenu ctermfg=cyan ctermbg=black
 hi PmenuSel ctermfg=black ctermbg=white
 " lsp_document_highlight color
@@ -55,6 +62,7 @@ highlight lspReference ctermbg=darkgray
 let g:lsp_document_code_action_signs_enabled = 0
 au FileType go,gomod,rust,vim,python,typescript,typescriptreact,rust,php,terraform,proto,yaml call s:configure_lsp()
 let g:lsp_settings_filetype_go = ['gopls', 'golangci-lint-langserver']
+let g:lsp_settings_filetype_typescript = ['typescript-language-server', 'eslint-language-server', 'deno']
 
 " gopls 設定 https://github.com/golang/tools/blob/master/gopls/doc/settings.md
 let g:lsp_settings = {
@@ -74,7 +82,8 @@ let g:lsp_settings = {
   \          'test': v:true,
   \          'tidy': v:true,
   \          'vendor': v:false,
-  \          'run_vulncheck_exp': v:true,
+  \          'run_vulncheck': v:true,
+  \          'upgrade_dependency': v:true,
   \        },
   \        'ui.inlayhint.hints': {
   \          'assignVariableTypes': v:true,
@@ -87,9 +96,8 @@ let g:lsp_settings = {
   \        },
   \        'hoverKind': 'SynopsisDocumentation',
   \        'linksInHover': v:false,
-  \        'deepCompletion': v:true,
-  \        'standaloneTags': ['ignore', 'wireinject'],
   \      },
+  \      'capabilities':{},
   \    },
   \    'golangci-lint-langserver': {
   \      'initialization_options': {
@@ -105,6 +113,7 @@ let g:lsp_settings = {
 function! s:configure_lsp() abort
   setlocal omnifunc=lsp#complete   " オムニ補完を有効化
   setlocal signcolumn=yes
+  if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
   nnoremap <buffer> <C-]> :<C-u>LspDefinition<CR>zz
   nnoremap <buffer> g<C-]> :<C-u>LspReferences<CR>
   nnoremap <buffer> gs :<C-u>LspDocumentSymbol<CR>
@@ -121,6 +130,8 @@ function! s:configure_lsp() abort
   nnoremap <buffer> gO :<C-u>LspCallHierarchyOutgoing<CR>
   nnoremap <buffer> g<c-r> :<C-u>silent LspStopServer<CR>:e
   nnoremap <buffer> gH :e<CR>
+  nnoremap <buffer> <expr>gk lsp#scroll(-1)
+  nnoremap <buffer> <expr>gj lsp#scroll(+1)
   augroup autoformat
     autocmd!
     autocmd BufWritePre *.py,*.rs call execute('LspDocumentFormatSync')
@@ -128,7 +139,3 @@ function! s:configure_lsp() abort
     " autocmd BufWritePre *.ts call execute(['LspCodeActionSync source.organizeImports.ts', 'LspDocumentFormatSync'])
   augroup END
 endfunction
-
-" popupmenu visible
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
-inoremap <expr> <c-cpace> pumvisible() ? "\<C-y>" : '<c-space>'

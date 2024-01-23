@@ -187,15 +187,6 @@ dotenv() {
   fi
 }
 
-docker-exec() {
-  local _container_id=`docker ps --format "{{.Names}}" | peco | xargs -I{} docker ps -a -q -f "name={}"`
-  local cmd="bash"
-  if [[ $# -ge 1 ]]; then
-    cmd=$@
-  fi
-  docker exec -it $_container_id $cmd
-}
-
 decode-jwt() {
   local parts=("${(@s:.:)1}")
   local result="${parts[2]}"
@@ -206,7 +197,6 @@ decode-jwt() {
   fi
   echo "$result" | tr '_-' '/+' | base64 -d | jq .
 }
-
 
 # vim-lsp-settingsのdenoを無効化する設定の作成
 create-vls-deno-disabled() {
@@ -219,3 +209,36 @@ create-vls-deno-disabled() {
 }
 EOF
 }
+
+openci() {
+  local baseUrl="https://app.circleci.com/pipelines/"
+  git rev-parse --is-inside-work-tree > /dev/null || {echo "not git repository"; return 1;}
+  git remote get-url origin > /dev/null || {echo "not set origin"; return 1;}
+  local repoUrl=`git remote get-url origin | sed "s/github\.com/github/g" | sed "s/\.git//g" | sed "s/git@//g" | sed "s/https:\/\///g"`
+  local branch=`git rev-parse --abbrev-ref HEAD | deno eval '
+    import { readAllSync } from "https://deno.land/std@0.204.0/streams/mod.ts";
+    const v = new TextDecoder().decode(readAllSync(Deno.stdin));
+    console.log(encodeURIComponent(v.trim()))
+  '`
+  open $baseUrl$repoUrl"?branch="$branch
+}
+
+
+# docker コンテナ上でコマンドを実行する
+docker-exec() {
+  local _container_id=`docker ps --format "{{.Names}}" | peco | xargs -I{} docker ps -a -q -f "name={}"`
+  local cmd="bash"
+  if [[ $# -ge 1 ]]; then
+    cmd=$@
+  fi
+  docker exec -it $_container_id $cmd
+}
+alias dexec=docker-exec
+
+# docker-composeのサービスを起動する
+cup() {
+  local services=`find -E * -type f -maxdepth 1 -iregex '^(docker-)?compose.ya?ml$' | xargs yq e '.services | keys | .[]'`
+  local running_services=`docker compose ps --services | tr '\n' '|' | sed 's/|$//'`
+  echo $services | tr ' ' '\n' | grep -vE "^($running_services)$" | peco | xargs docker compose up -d
+}
+alias composeup=cup

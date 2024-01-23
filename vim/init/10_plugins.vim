@@ -61,4 +61,5 @@ Plug 'prettier/vim-prettier', {
 Plug 'hashivim/vim-terraform' , { 'for': 'terraform'}
 Plug 'mattn/vim-maketable'
 
+Plug 'github/copilot.vim'
 call plug#end()

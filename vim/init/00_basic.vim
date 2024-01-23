@@ -75,6 +75,8 @@ set tags=./tags
 
 set laststatus=2
 
+set redrawtime=10000
+
 if has('persistent_undo')
   set undodir=~/.vim/undo
   set undofile

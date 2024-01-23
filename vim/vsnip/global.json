@@ -1,20 +1,32 @@
 {
 	"uuid": {
-		"prefix": "uuid",
+		"prefix": ["uuid"],
 		"body": [
-			"${VIM:system('python3 -c \"import uuid, sys;sys.stdout.write(str(uuid.uuid4()))\"')}"
+			"${VIM:system('deno eval \"Deno.stdout.writeSync(new TextEncoder().encode(crypto.randomUUID()))\"')}"
 		]
 	},
 	"ulid": {
-		"prefix": "ulid",
+		"prefix": ["ulid"],
 		"body": [
-			"${VIM:system('python3 -c \"import fast_ulid, sys;sys.stdout.write(str(fast_ulid.ulid()))\"')}"
+			"${VIM:system('deno eval \"import * as mod from \\\"https://deno.land/x/ulid@v0.3.0/mod.ts\\\"; Deno.stdout.writeSync(new TextEncoder().encode(mod.ulid()))\"')}"
 		]
 	},
-	"now": {
-		"prefix": "nowunix",
+	"ulidz": {
+		"prefix": ["ulidz"],
 		"body": [
-			"${VIM:system('python3 -c \"import time, sys;sys.stdout.write(str(int(time.time())))\"')}"
+			"${VIM:system('deno eval \"import * as mod from \\\"https://deno.land/x/ulid@v0.3.0/mod.ts\\\"; Deno.stdout.writeSync(new TextEncoder().encode(mod.ulid().substring(0,10)+\\\"0\\\".repeat(16)))\"')}"
+		]
+	},
+	"Unix Timestamp": {
+		"prefix": ["nowunix"],
+		"body": [
+			"${VIM:strftime(\"%s\")}"
+		]
+	},
+	"Now ISO TimeStamp": {
+		"prefix": ["nowiso"],
+		"body": [
+			"${VIM:strftime(\"%Y-%m-%dT%H:%M:%S%z\")}"
 		]
 	},
 	"---": {

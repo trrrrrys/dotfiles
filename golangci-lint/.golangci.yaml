@@ -1,5 +1,5 @@
 run:
-  go: 1.19
+  go: "1.21"
   skip-dirs:
     - vendor
     - docker
@@ -18,6 +18,7 @@ linters:
     - thelper
     - misspell
     - gofmt
+    - goimports
 
 linters-settings:
   stylecheck:

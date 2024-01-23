@@ -34,7 +34,7 @@ let g:airline_mode_map = {
 	\ 'V'  : 'V-Line',
 	\ '' : 'V-Block',
 	\ }
-let g:airline#extensions#default#layout = [['a', 'b', 'c'], ['x', 'y', 'z']]
+let g:airline#extensions#default#layout = [['a', 'b', 'c', 'x'], ['y', 'z']]
 let g:airline_section_c = '%t'
 let g:airline_section_x = '%{&filetype}'
 " let g:airline_section_z = '%3l:%2v %{airline#extensions#ale#get_warning()} %{airline#extensions#ale#get_error()}'

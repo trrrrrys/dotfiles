@@ -14,8 +14,8 @@ nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 nnoremap Q <Nop>
 
-" 参考: https://qiita.com/tekkoc/items/98adcadfa4bdc8b5a6ca
 nnoremap s <Nop>
+vnoremap s <Nop>
 " x をレジスタに格納しない
 " "_ ブラックホールレジスタ
 nnoremap x "_x
@@ -85,8 +85,21 @@ nnoremap H <Nop>
 nnoremap L <Nop>
 
 nnoremap Y y$
+nnoremap <silent> X vg_"_x
 nnoremap <silent> <Leader>o o<esc>
 
+inoremap <F1> <Nop>
+inoremap <F2> <Nop>
+inoremap <F3> <Nop>
+inoremap <F4> <Nop>
+inoremap <F5> <Nop>
+inoremap <F6> <Nop>
+inoremap <F7> <Nop>
+inoremap <F8> <Nop>
+inoremap <F9> <Nop>
+inoremap <F10> <Nop>
+inoremap <F11> <Nop>
+inoremap <F12> <Nop>
 
 " replace paste 時にレジスタに格納しない
 vnoremap p "_dP
@@ -119,7 +132,7 @@ endfunction
 autocmd VimEnter * imap <Nul> <c-space>
 
 " snake to camel
-" vnoremap sc 
+" vnoremap sc
 
 function! SynGroupUnderCursor()
   let l:current_syntax_id = synID(line('.'), col('.'), 0)

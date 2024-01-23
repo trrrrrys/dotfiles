@@ -20,7 +20,17 @@ function usage() {
   echo $func_list | grep $func_prefix | sed "s/$func_prefix//g"
 }
 
+function init_brew() {
+  echo "install brew"
+  # install
+  if [ -z `command -v brew` ]; then /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; fi
+
+  # install packages
+  brew bundle --file=./brew/Brewfile
+}
+
 function init_zsh() {
+  echo "setup zsh"
   # zsh install check
 	# zplug install
 	if ! [ -d  ~/.zplug ]; then
@@ -38,12 +48,8 @@ function init_zsh() {
   exec $SHELL -l
 }
 
-function init_brew() {
-  # install
-  if [ -z `command -v brew` ]; then /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; fi
-}
-
 function init_gobins() {
+  echo "install go binaries"
   cat ./gobins/gotools.txt | xargs -n1 go install
 	ln -sf `pwd`/golangci-lint/.golangci.yaml $HOME/
 }
@@ -55,9 +61,12 @@ func_list=`
 
 
 if [ -z "$1" ]; then
-  echo "keyword: "
-	echo $func_list
-  exit 0
+  for fn in $func_list
+  do
+    if [[ "$fn" == *"$func_prefix"* ]]; then
+      $fn
+    fi
+  done
 fi
 
 # help check

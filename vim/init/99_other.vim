@@ -21,13 +21,16 @@ augroup END
 
 " autocmd TextChanged,InsertLeave *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
 
-" vimgrep時に自動でqfウィンドウで開く 
-autocmd QuickFixCmdPost *grep* cwindow
+" vimgrep時に自動でqfウィンドウで開く
+autocmd QuickfixCmdPost make,grep,grepadd,vimgrep cwindow
+
+" tftplファイルを開いた際にterraform filetypeを設定
+autocmd BufNewFile,BufRead *.tftpl set filetype=terraform
 
 augroup TabSettings
 	autocmd!
 	" ソフトタブ
-	au FileType python,proto,sh setlocal expandtab 
+	au FileType python,proto,sh setlocal expandtab
 	" タブ表示幅
 	au FileType proto,sh setlocal shiftwidth=2
 	au FileType python,go setlocal shiftwidth=4
