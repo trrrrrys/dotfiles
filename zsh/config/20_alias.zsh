@@ -19,6 +19,7 @@ alias cp='cp -i'
 alias mv='mv -i'
 alias mkdir='mkdir -p'
 
+alias re="exec $SHELL -l"
 alias relogin="exec $SHELL -l"
 
 alias sudo='sudo '

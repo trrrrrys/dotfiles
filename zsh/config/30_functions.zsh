@@ -239,6 +239,13 @@ alias dexec=docker-exec
 cup() {
   local services=`find -E * -type f -maxdepth 1 -iregex '^(docker-)?compose.ya?ml$' | xargs yq e '.services | keys | .[]'`
   local running_services=`docker compose ps --services | tr '\n' '|' | sed 's/|$//'`
-  echo $services | tr ' ' '\n' | grep -vE "^($running_services)$" | peco | xargs docker compose up -d
+  case $1 in
+    --build)
+      echo $services | tr ' ' '\n' | grep -vE "^($running_services)$" | peco | xargs docker compose up -d --build
+      ;;
+    *)
+      echo $services | tr ' ' '\n' | grep -vE "^($running_services)$" | peco | xargs docker compose up -d
+      ;;
+  esac
 }
 alias composeup=cup

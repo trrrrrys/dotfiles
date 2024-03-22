@@ -1,13 +1,12 @@
 
 eval $(/opt/homebrew/bin/brew shellenv)
-# GOPATH
 export GOPATH=$HOME/go
+export MISE_GO_SET_GOBIN=false
 export GOBIN=$GOPATH/bin
 # path
 path=(
 	$GOBIN
 	/usr/local/bin
-	/usr/local/go/bin
 	$HOME/bin
 	$HOME/.local/bin
 	$HOME/google-cloud-sdk/bin
@@ -29,6 +28,8 @@ type mise 1> /dev/null && source <(mise activate zsh)
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
 # bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+[ -s "/Users/tsukahara-ryo/.bun/_bun" ] && source "/Users/tsukahara-ryo/.bun/_bun"
+
 [ -s "$HOME/.config/op/plugins.sh" ] && source $HOME/.config/op/plugins.sh

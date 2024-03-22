@@ -187,32 +187,8 @@
 			"}"
 		]
 	},
-	"table test (use gocmp)": {
+	"table test (cmp version)": {
 		"prefix": ["ttcmp"],
-		"body": [
-			"var tests = []struct {",
-			"\tname string",
-			"\tin string",
-			"\texpect string",
-			"\t}{",
-			"{$1},",
-			"}",
-			"for _, tt := range tests {",
-			"\ttt := tt",
-			"\tt.Run(tt.name, func(t *testing.T){",
-			"\t\tgot, err := f()",
-			"\t\tif err != nil {",
-			"\t\t\tt.Fatalf(\"error: %+v\", err)",
-			"\t\t}",
-			"\tif !reflect.DeepEqual(tt.expect, got) {",
-			"\t\t\tt.Errorf(cmp.Diff(tt.expect, got))",
-			"\t}",
-			"\t})",
-			"}"
-		]
-	},
-	"table test (salon version)": {
-		"prefix": ["ttsalon"],
 		"body": [
 			"type (",
       "\tin struct {",
@@ -239,8 +215,8 @@
 			"\t\tif err != nil {",
 			"\t\t\tt.Fatalf(\"error: %+v\", err)",
 			"\t\t}",
-			"\tif !cmp.Equal(tt.want, got) {",
-			"\t\t\tt.Errorf(cmp.Diff(tt.want, got))",
+			"\tif diff := cmp.Diff(tt.want, got); diff != \"\" {",
+			"\t\t\tt.Errorf(diff)",
 			"\t}",
 			"\t})",
 			"}"
