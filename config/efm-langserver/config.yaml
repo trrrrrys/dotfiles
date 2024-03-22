@@ -1,0 +1,39 @@
+version: 2
+root-markers:
+  - .git/
+tools:
+  json-prettier: &json-prettier
+    format-command: |
+      deno run -A npm:prettier ${INPUT}
+  css-prettier: &css-prettier
+    format-command: |
+      deno run -A npm:prettier --parser css ${INPUT}
+  html-prettier: &html-prettier
+    format-command: |
+      deno run -A npm:prettier --parser html ${INPUT}
+  biomefmt: &biomefmt
+    format-command: |
+      biome format --stdin-file-path=${INPUT}
+    format-stdin: true
+  prettier: &prettier
+    format-command: |
+      deno run -A npm:prettier --stdin-filepath ${INPUT}
+    format-stdin: true
+
+languages:
+  css:
+    - <<: *css-prettier
+  html:
+    - <<: *html-prettier
+  javascript:
+    - <<: *prettier
+  typescript:
+    - <<: *biomefmt
+    # - <<: *biomelint
+  typescriptd:
+    - <<: *denofmt
+    - <<: *denolint
+  json:
+    - <<: *json-prettier
+  jsonc:
+    - <<: *json-prettier
