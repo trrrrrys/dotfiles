@@ -1,9 +1,4 @@
 
-" completeopt を自動設定しない
-let g:asyncomplete_min_chars = 2
-let g:asyncomplete_popup_delay = 300
-let asyncomplete_auto_popup = 0
-let asyncomplete_auto_completeopt = 0
 set completeopt=menuone,noinsert,noselect,popup
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 inoremap <expr> <cr> pumvisible() ? '<C-y>' : '<cr>'
@@ -12,7 +7,7 @@ inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 " set completepopup=align:menu,border:off
 set completepopup=border:off
 
-let g:lsp_async_completion = 1
+" let g:lsp_async_completion = 1
 let g:lsp_insert_text_enabled = 1
 let g:lsp_text_edit_enabled = 1
 let g:lsp_signature_help_enabled = 1
@@ -51,7 +46,6 @@ let g:lsp_format_sync_timeout = 1000
 " logging
 let g:lsp_log_verbose = 0
 let g:lsp_log_file = expand('~/tmp/vim-lsp.log')
-let g:asyncomplete_log_file = expand('~/tmp/asyncomplete.log')
 
 hi Pmenu ctermfg=cyan ctermbg=black
 hi PmenuSel ctermfg=black ctermbg=white
@@ -60,56 +54,16 @@ highlight lspReference ctermbg=darkgray
 
 "
 let g:lsp_document_code_action_signs_enabled = 0
-au FileType go,gomod,rust,vim,python,typescript,typescriptreact,rust,php,terraform,proto,yaml call s:configure_lsp()
+au FileType go,gomod,rust,vim,python,typescript,typescriptd,typescriptreact,rust,php,terraform,proto,yaml call s:configure_lsp()
 let g:lsp_settings_filetype_go = ['gopls', 'golangci-lint-langserver']
-let g:lsp_settings_filetype_typescript = ['typescript-language-server', 'eslint-language-server', 'deno']
+" let g:markdown_fenced_languages = ['ts=typescript']
 
 " gopls 設定 https://github.com/golang/tools/blob/master/gopls/doc/settings.md
-let g:lsp_settings = {
-  \    'gopls': {
-  \      'initialization_options': {
-  \        'staticcheck': v:true,
-  \        'completeUnimported': v:true,
-  \        'usePlaceholders': v:true,
-  \        'completionDocumentation': v:true,
-  \        'analyses': {
-  \          'fillstruct': v:true,
-  \          'staticcheck': v:true,
-  \        },
-  \        'matcher': 'fuzzy',
-  \        'codelenses': {
-  \          'generate': v:true,
-  \          'test': v:true,
-  \          'tidy': v:true,
-  \          'vendor': v:false,
-  \          'run_vulncheck': v:true,
-  \          'upgrade_dependency': v:true,
-  \        },
-  \        'ui.inlayhint.hints': {
-  \          'assignVariableTypes': v:true,
-  \          'compositeLiteralFields': v:true,
-  \          'compositeLiteralTypes': v:true,
-  \          'constantValues': v:true,
-  \          'functionTypeParameters': v:true,
-  \          'parameterNames': v:true,
-  \          'rangeVariableTypes': v:true,
-  \        },
-  \        'hoverKind': 'SynopsisDocumentation',
-  \        'linksInHover': v:false,
-  \      },
-  \      'capabilities':{},
-  \    },
-  \    'golangci-lint-langserver': {
-  \      'initialization_options': {
-  \        'command': [
-  \          'golangci-lint', 'run',
-  \          '--out-format', 'json',
-  \        ]
-  \      },
-  \    },
-  \    'pyls-all': { 'disabled': 1 },
-  \    'yaml-language-server': { 'disabled': 1 },
-  \  }
+let g:lsp_settings = json_decode(join(
+  \ readfile(expand('<sfile>:p:h').'/lsp.json', '', 1000),
+  \ "\n"
+  \ ))
+
 function! s:configure_lsp() abort
   setlocal omnifunc=lsp#complete   " オムニ補完を有効化
   setlocal signcolumn=yes
@@ -136,6 +90,8 @@ function! s:configure_lsp() abort
     autocmd!
     autocmd BufWritePre *.py,*.rs call execute('LspDocumentFormatSync')
     autocmd BufWritePre *.go call execute(['LspCodeActionSync source.organizeImports', 'LspDocumentFormatSync'])
-    " autocmd BufWritePre *.ts call execute(['LspCodeActionSync source.organizeImports.ts', 'LspDocumentFormatSync'])
+    autocmd BufWritePre *.ts call execute([
+      \ 'LspDocumentFormatSync --server=efm-langserver'
+      \ ])
   augroup END
 endfunction

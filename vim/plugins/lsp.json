@@ -1,0 +1,57 @@
+{
+  "gopls": {
+    "initialization_options": {
+      "staticcheck": true,
+      "completeUnimported": true,
+      "usePlaceholders": true,
+      "completionDocumentation": true,
+      "analyses": {
+        "fillstruct": true,
+        "staticcheck": true
+      },
+      "matcher": "fuzzy",
+      "codelenses": {
+        "generate": true,
+        "test": true,
+        "tidy": true,
+        "vendor": false,
+        "run_vulncheck": true,
+        "upgrade_dependency": true
+      },
+      "ui.inlayhint.hints": {
+        "assignVariableTypes": true,
+        "compositeLiteralFields": true,
+        "compositeLiteralTypes": true,
+        "constantValues": true,
+        "functionTypeParameters": true,
+        "parameterNames": true,
+        "rangeVariableTypes": true
+      },
+      "hoverKind": "SynopsisDocumentation",
+      "linksInHover": false
+    },
+    "capabilities": {}
+  },
+  "golangci-lint-langserver": {
+    "initialization_options": {
+      "command": ["golangci-lint", "run", "--out-format", "json"]
+    }
+  },
+  "pyls-all": {
+    "disabled": true
+  },
+  "yaml-language-server": {
+    "disabled": true
+  },
+  "efm-langserver": {
+    "disabled": false
+  },
+  "typescript-language-server": { "disabled": true },
+  "deno": {
+    "disabled": true,
+    "initialization_options": {
+      "lint": false
+    },
+    "allowlist": ["typescriptd", "typescriptreactd"]
+  }
+}

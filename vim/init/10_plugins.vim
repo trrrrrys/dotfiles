@@ -13,8 +13,6 @@ Plug 'scrooloose/nerdtree'
 
 " language server
 Plug 'prabirshrestha/vim-lsp'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'mattn/vim-lsp-settings'
 
 " snipets
@@ -32,15 +30,13 @@ Plug 'airblade/vim-gitgutter'
 " tab
 Plug 'kana/vim-submode'
 
-" easymotion 	
+" easymotion
 Plug 'easymotion/vim-easymotion'
 
 Plug 'vim-scripts/surround.vim'
 
 " 選択箇所をpng化する
 Plug 'segeljakt/vim-silicon'
-
-" Plug 'mattn//vim-goimports'
 
 " yapf
 Plug 'mindriot101/vim-yapf'
@@ -56,10 +52,10 @@ Plug 'prettier/vim-prettier', {
 
 " Plug 'sheerun/vim-polyglot'
 
-" Plug 'vim-denops/denops.vim'
-" Plug 'trrrrrys/switchb'
+Plug 'vim-denops/denops.vim'
+Plug 'trrrrrys/switchb.vim'
 Plug 'hashivim/vim-terraform' , { 'for': 'terraform'}
 Plug 'mattn/vim-maketable'
 
-Plug 'github/copilot.vim'
+" Plug 'github/copilot.vim'
 call plug#end()

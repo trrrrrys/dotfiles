@@ -11,21 +11,34 @@ au FileType python,go set shiftwidth=4
 
 " tsxが typescript として扱われてlspの補完が効かなくなるのでその暫定対応
 au BufNewFile,BufRead *.tsx set filetype=typescriptreact
-au BufNewFile,BufRead *.fish set filetype=fish
 
-" 保存時にPretterで自動フォーマット
-augroup autoPrettier
-	autocmd!
-	autocmd bufWritePre *.ts,*.js,*.tsx,*.jsx,*.html :Prettier
-augroup END
+function! s:is_npm_dir() abort
+    let l:path = expand('%:p:h')
+    while l:path != '/'
+        let l:npmPath = l:path . '/node_modules'
+        if isdirectory(l:npmPath)
+            return v:true
+        endif
+        let l:path = fnamemodify(l:path, ':h')
+    endwhile
+    return v:false
+endfunction
 
-" autocmd TextChanged,InsertLeave *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
+function! s:set_custom_filetype() abort
+  if !s:is_npm_dir()
+    set filetype=typescriptd
+  endif
+endfunction
+
+autocmd BufRead,BufNewFile *.ts call s:set_custom_filetype()
 
 " vimgrep時に自動でqfウィンドウで開く
 autocmd QuickfixCmdPost make,grep,grepadd,vimgrep cwindow
 
 " tftplファイルを開いた際にterraform filetypeを設定
 autocmd BufNewFile,BufRead *.tftpl set filetype=terraform
+" tsconfig.jsonをjsoncとして扱う
+autocmd BufNewFile,BufRead tsconfig.json setlocal filetype=jsonc
 
 augroup TabSettings
 	autocmd!

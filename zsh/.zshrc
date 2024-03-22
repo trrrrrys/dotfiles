@@ -23,6 +23,3 @@ fi
 if ! [[ -z `command -v zprof` ]] ;then
   zprof
 fi
-
-# bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
