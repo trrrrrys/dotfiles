@@ -44,36 +44,19 @@
     "disabled": true
   },
   "efm-langserver": {
-    "disabled": false
-  },
-  "typescript-language-server": { "disabled": true },
-  "deno": {
     "disabled": false,
-    "workspace_config": {
-      "deno": {
-           "lint": true,
-           "unstable": true,
-           "codeLens": {
-             "implementations": true,
-             "references": true,
-             "referencesAllFunctions": true,
-             "test": true,
-             "testArgs": ["-A"]
-           },
-           "suggest": {
-             "autoImports": true,
-             "completeFunctionCalls": true,
-             "names": true,
-             "paths": true,
-             "imports": {
-               "autoDiscover": false,
-               "hosts": {
-                 "https://deno.land/": true
-               }
-             }
-    }
-    }
-    },
-    "allowlist": ["typescriptd", "typescriptreactd"]
-  }
+    "allowList": [
+      "javascript",
+      "typescript",
+      "javacriptreact",
+      "typescriptreact",
+      "html",
+      "css",
+      "json",
+      "jsonc",
+      "json5"
+    ]
+  },
+  "vscode-json-language-server": { "disabled": true },
+  "typescript-language-server": { "disabled": false }
 }

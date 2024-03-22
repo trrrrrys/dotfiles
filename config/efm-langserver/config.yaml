@@ -17,8 +17,19 @@ tools:
     format-stdin: true
   prettier: &prettier
     format-command: |
-      deno run -A npm:prettier --stdin-filepath ${INPUT}
-    format-stdin: true
+      deno run -A npm:prettier ${INPUT}
+    require-marker: true
+    root-markers:
+      - .prettierrc
+      - .prettierrc.json
+      - .prettierrc.js
+      - .prettierrc.yml
+      - .prettierrc.yaml
+      - .prettierrc.json5
+      - .prettierrc.mjs
+      - .prettierrc.cjs
+      - .prettierrc.toml
+      - node_modules
 
 languages:
   css:
@@ -28,11 +39,8 @@ languages:
   javascript:
     - <<: *prettier
   typescript:
-    - <<: *biomefmt
+    - <<: *prettier
     # - <<: *biomelint
-  typescriptd:
-    - <<: *denofmt
-    - <<: *denolint
   json:
     - <<: *json-prettier
   jsonc:

@@ -56,7 +56,8 @@ highlight lspReference ctermbg=darkgray
 let g:lsp_document_code_action_signs_enabled = 0
 au FileType go,gomod,rust,vim,python,typescript,typescriptd,typescriptreact,rust,php,terraform,proto,yaml call s:configure_lsp()
 let g:lsp_settings_filetype_go = ['gopls', 'golangci-lint-langserver']
-" let g:markdown_fenced_languages = ['ts=typescript']
+let g:lsp_settings_filetype_typescript = ['typescript-language-server', 'deno', 'efm-langserver']
+let g:markdown_fenced_languages = ['ts=typescript']
 
 " gopls 設定 https://github.com/golang/tools/blob/master/gopls/doc/settings.md
 let g:lsp_settings = json_decode(join(
@@ -64,11 +65,27 @@ let g:lsp_settings = json_decode(join(
   \ "\n"
   \ ))
 
+
+" npmディレクトリ判定
+function! s:is_npm_dir() abort
+    let l:path = expand('%:p:h')
+    while l:path != '/'
+        let l:npmPath = l:path . '/node_modules'
+        if isdirectory(l:npmPath)
+            return v:true
+        endif
+        let l:path = fnamemodify(l:path, ':h')
+    endwhile
+    return v:false
+endfunction
+
 function! s:configure_lsp() abort
   setlocal omnifunc=lsp#complete   " オムニ補完を有効化
   setlocal signcolumn=yes
+  let l:is_npm = s:is_npm_dir()
   if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
   nnoremap <buffer> <C-]> :<C-u>LspDefinition<CR>zz
+  if !l:is_npm | nnoremap <buffer> <C-]> :<C-u>LspDenoDefinition<CR>zz | endif
   nnoremap <buffer> g<C-]> :<C-u>LspReferences<CR>
   nnoremap <buffer> gs :<C-u>LspDocumentSymbol<CR>
   nnoremap <buffer> gS :<C-u>LspWorkspaceSymbol<CR>
@@ -90,8 +107,15 @@ function! s:configure_lsp() abort
     autocmd!
     autocmd BufWritePre *.py,*.rs call execute('LspDocumentFormatSync')
     autocmd BufWritePre *.go call execute(['LspCodeActionSync source.organizeImports', 'LspDocumentFormatSync'])
-    autocmd BufWritePre *.ts call execute([
-      \ 'LspDocumentFormatSync --server=efm-langserver'
-      \ ])
+
+    if l:is_npm
+      autocmd BufWritePre *.ts call execute([
+        \ 'LspDocumentFormatSync --server=efm-langserver'
+        \ ])
+    else
+      autocmd BufWritePre *.ts call execute([
+        \ 'LspDocumentFormatSync'
+        \ ])
+    endif
   augroup END
 endfunction
