@@ -48,9 +48,31 @@
   },
   "typescript-language-server": { "disabled": true },
   "deno": {
-    "disabled": true,
-    "initialization_options": {
-      "lint": false
+    "disabled": false,
+    "workspace_config": {
+      "deno": {
+           "lint": true,
+           "unstable": true,
+           "codeLens": {
+             "implementations": true,
+             "references": true,
+             "referencesAllFunctions": true,
+             "test": true,
+             "testArgs": ["-A"]
+           },
+           "suggest": {
+             "autoImports": true,
+             "completeFunctionCalls": true,
+             "names": true,
+             "paths": true,
+             "imports": {
+               "autoDiscover": false,
+               "hosts": {
+                 "https://deno.land/": true
+               }
+             }
+    }
+    }
     },
     "allowlist": ["typescriptd", "typescriptreactd"]
   }

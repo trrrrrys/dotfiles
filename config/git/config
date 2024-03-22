@@ -1,0 +1,43 @@
+[user]
+  name = trrrrrys
+  email = tsukahararu@gmail.com
+[alias]
+  cz = !deno run -A npm:git-cz@latest
+  st = status
+  dh = diff HEAD
+  ln = log --graph --decorate --pretty=oneline --abbrev-commit
+  sp = stash pop
+  up = !git push -u origin `git rev-parse --abbrev-ref HEAD`
+  pr = !gh pr
+  view = !gh repo view --web --branch `git rev-parse --abbrev-ref HEAD`
+  p = push
+  sw = "! \
+    f() { \
+      if [ \"$1\" = \"master\" ] || [ \"$1\" = \"main\" ]; then \
+        git switch `git branch --format=\"%(refname:short)\" | grep -E -e \"^master$\" -e \"^main$\" | head -n1`; \
+      else \
+        git switch \"$@\"; \
+      fi; \
+    }; f"
+  sc = "! \
+    f() { \
+      if git show-ref --verify -q refs/heads/$1; then \
+        git switch $1; \
+      else \
+        git switch -c $1;\
+      fi; \
+      }; \
+    f"
+[core]
+    editor = vim
+[pull]
+    ff = only
+[init]
+    defaultBranch = main
+[credential "https://github.com"]
+	  helper = !gh auth git-credential
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
