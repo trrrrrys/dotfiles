@@ -54,7 +54,12 @@ highlight lspReference ctermbg=darkgray
 
 "
 let g:lsp_document_code_action_signs_enabled = 0
-au FileType go,gomod,rust,vim,python,typescript,typescriptd,typescriptreact,rust,php,terraform,proto,yaml call s:configure_lsp()
+let s:filetypes = [
+      \ 'go', 'gomod', 'rust', 'vim', 'python', 'proto',
+      \ 'typescript', 'typescriptreact',
+      \ 'terraform', 'yaml', 'authzed'
+      \ ]
+au FileType * if index(s:filetypes, &filetype) >= 0 | call s:configure_lsp() | endif
 let g:lsp_settings_filetype_go = ['gopls', 'golangci-lint-langserver']
 let g:lsp_settings_filetype_typescript = ['typescript-language-server', 'deno', 'efm-langserver']
 let g:markdown_fenced_languages = ['ts=typescript']
@@ -64,6 +69,14 @@ let g:lsp_settings = json_decode(join(
   \ readfile(expand('<sfile>:p:h').'/lsp.json', '', 1000),
   \ "\n"
   \ ))
+
+if executable('spicedb')
+  au User lsp_setup call lsp#register_server({
+    \ 'name': 'spicedb lsp',
+    \ 'cmd': {server_info->['spicedb', 'lsp']},
+    \ 'allowlist': ['authzed'],
+    \ })
+endif
 
 
 " npmディレクトリ判定
@@ -85,7 +98,7 @@ function! s:configure_lsp() abort
   let l:is_npm = s:is_npm_dir()
   if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
   nnoremap <buffer> <C-]> :<C-u>LspDefinition<CR>zz
-  if !l:is_npm | nnoremap <buffer> <C-]> :<C-u>LspDenoDefinition<CR>zz | endif
+  if !l:is_npm && &filetype == "typescript" | nnoremap <buffer> <C-]> :<C-u>LspDenoDefinition<CR>zz | endif
   nnoremap <buffer> g<C-]> :<C-u>LspReferences<CR>
   nnoremap <buffer> gs :<C-u>LspDocumentSymbol<CR>
   nnoremap <buffer> gS :<C-u>LspWorkspaceSymbol<CR>
