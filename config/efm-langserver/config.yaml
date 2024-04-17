@@ -17,7 +17,8 @@ tools:
     format-stdin: true
   prettier: &prettier
     format-command: |
-      deno run -A npm:prettier ${INPUT}
+      deno run -A npm:prettier --stdin-filepath ${INPUT}
+    format-stdin: true
     require-marker: true
     root-markers:
       - .prettierrc
