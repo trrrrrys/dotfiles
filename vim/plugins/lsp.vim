@@ -41,7 +41,19 @@ let g:lsp_diagnostics_virtual_text_insert_mode_enabled = 0
 " let g:lsp_diagnostics_virtual_text_prefix = ""
 let g:lsp_format_sync_timeout = 1000
 
-" let g:lsp_inlay_hints_enabled = 1
+let g:lsp_inlay_hints_enabled = 0
+nnoremap <silent> gth :<C-U>call <SID>toggle_inlay_hints()<CR>
+function! s:toggle_inlay_hints() abort
+  if g:lsp_inlay_hints_enabled
+    let g:lsp_inlay_hints_enabled = 0
+    call lsp#internal#inlay_hints#_disable()
+  else
+    let g:lsp_inlay_hints_enabled = 1
+    call lsp#internal#inlay_hints#_enable()
+  endif
+  edit
+  redraw
+endfunction
 
 " logging
 let g:lsp_log_verbose = 0
@@ -120,6 +132,7 @@ function! s:configure_lsp() abort
     autocmd!
     autocmd BufWritePre *.py,*.rs call execute('LspDocumentFormatSync')
     autocmd BufWritePre *.go call execute(['LspCodeActionSync source.organizeImports', 'LspDocumentFormatSync'])
+    autocmd BufWritePre *.yaml,*.json call execute(['LspDocumentFormatSync --server=efm-langserver'])
 
     if l:is_npm
       autocmd BufWritePre *.ts call execute([

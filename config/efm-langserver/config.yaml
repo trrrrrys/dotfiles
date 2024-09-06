@@ -4,20 +4,20 @@ root-markers:
 tools:
   json-prettier: &json-prettier
     format-command: |
-      deno run -A npm:prettier ${INPUT}
+      deno run -A --no-lock npm:prettier ${INPUT}
   css-prettier: &css-prettier
     format-command: |
-      deno run -A npm:prettier --parser css ${INPUT}
+      deno run -A --no-lock npm:prettier --parser css ${INPUT}
   html-prettier: &html-prettier
     format-command: |
-      deno run -A npm:prettier --parser html ${INPUT}
+      deno run -A --no-lock npm:prettier --parser html ${INPUT}
   biomefmt: &biomefmt
     format-command: |
-      biome format --stdin-file-path=${INPUT}
+      deno run -A --no-lock npm:biome format --stdin-file-path=${INPUT}
     format-stdin: true
   prettier: &prettier
     format-command: |
-      deno run -A npm:prettier --stdin-filepath ${INPUT}
+      deno run -A --no-lock npm:prettier --stdin-filepath ${INPUT}
     format-stdin: true
     require-marker: true
     root-markers:
@@ -31,6 +31,20 @@ tools:
       - .prettierrc.cjs
       - .prettierrc.toml
       - node_modules
+  terraform: &terraform
+    format-command: |
+      terraform fmt --write=false -
+    format-stdin: true
+  protobuf: &protobuf
+    format-command: |
+      buf lint --path=${INPUT}
+  cspell-lint: &cspell-lint
+    prefix: cspell
+    lint-command: 'deno run -A --no-lock npm:cspell lint --no-progress --no-summary --no-color -c ~/.config/cspell/cspell.json ${INPUT}'
+    lint-formats:
+      - '%f:%l:%c %m'
+      - '%f:%l:%c - %m'
+    lint-severity: 4 # Hint, https://github.com/mattn/efm-langserver/blob/master/schema.md#21117-property-lint-severity
 
 languages:
   css:
@@ -42,7 +56,17 @@ languages:
   typescript:
     - <<: *prettier
     # - <<: *biomelint
+  yaml:
+    - <<: *prettier
   json:
     - <<: *json-prettier
   jsonc:
     - <<: *json-prettier
+  json5:
+    - <<: *json-prettier
+  terraform:
+    - <<: *terraform
+  proto:
+    - <<: *protobuf
+  =:
+    - <<: *cspell-lint

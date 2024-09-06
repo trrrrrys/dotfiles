@@ -28,7 +28,9 @@
         "rangeVariableTypes": true
       },
       "hoverKind": "SynopsisDocumentation",
-      "linksInHover": false
+      "linksInHover": false,
+      "build.buildFlags": [ "-tags=wireinject" ],
+      "build.standaloneTags": ["ignore", "wireinject", "!wireinject"]
     },
     "capabilities": {}
   },
@@ -45,7 +47,8 @@
   },
   "efm-langserver": {
     "disabled": false,
-    "allowList": [
+    "allowlist": [
+      "go",
       "javascript",
       "typescript",
       "javacriptreact",
@@ -54,7 +57,8 @@
       "css",
       "json",
       "jsonc",
-      "json5"
+      "json5",
+      "yaml"
     ]
   },
   "vscode-json-language-server": { "disabled": true },
