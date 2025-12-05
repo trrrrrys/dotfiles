@@ -4,7 +4,8 @@
 update_prompt() {
 	# gitブランチ
 	local branch
-	if git rev-parse 2> /dev/null; then
+	git rev-parse 2> /dev/null
+	if [[ $? -eq 0 ]]; then
 		if [[ -n `git status --short 2>/dev/null` ]]; then
 			branch="${fg[magenta]}("`git branch --show-current`")${reset_color}"
 		else

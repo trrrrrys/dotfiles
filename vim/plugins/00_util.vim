@@ -67,6 +67,12 @@ function! GitBranchName() abort
 endfunction
 vnoremap <silent> gb :call GitBranchName()<cr>
 
+function! ReplaceGitBranchName() abort
+  let branchName = system("git branch --show-current | grep -o 'sc-[1-9][0-9]*' | rev | cut -d'-' -f1 | rev | tr -d '\n'")
+  execute ":s/xxx/".branchName."/g"
+endfunction
+nnoremap <silent> gb :call ReplaceGitBranchName()<cr>
+
 function! Pwf() abort
   echo expand('%:p')
 endfunction
@@ -101,3 +107,10 @@ let g:silicon = {
       \   'round-corner':          v:true,
       \   'window-controls':       v:true,
       \ }
+
+command! Profile call s:command_profile()
+function! s:command_profile() abort
+  profile start ~/profile.txt
+  profile func *
+  profile file *
+endfunction

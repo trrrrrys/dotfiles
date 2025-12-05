@@ -25,7 +25,8 @@ Plug 'tomtom/tcomment_vim'
 " Git
 Plug 'tpope/vim-fugitive'
 " Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-signify'
 
 " tab
 Plug 'kana/vim-submode'
@@ -39,23 +40,24 @@ Plug 'vim-scripts/surround.vim'
 Plug 'segeljakt/vim-silicon'
 
 " yapf
-Plug 'mindriot101/vim-yapf'
+" Plug 'mindriot101/vim-yapf'
 
 " editorconfig
 Plug 'editorconfig/editorconfig-vim'
 
 " prettier
-Plug 'prettier/vim-prettier', {
-  \ 'do': 'npm install',
-  \ 'for': ['javascript', 'typescript', 'typescriptreact', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html']
-  \ }
+" Plug 'prettier/vim-prettier', {
+"   \ 'do': 'npm install',
+"   \ 'for': ['javascript', 'typescript', 'typescriptreact', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html']
+"   \ }
 
 " Plug 'sheerun/vim-polyglot'
 
-Plug 'vim-denops/denops.vim'
-Plug 'trrrrrys/switchb.vim'
+" Plug 'vim-denops/denops.vim'
+" Plug 'trrrrrys/switchb.vim'
 Plug 'hashivim/vim-terraform' , { 'for': 'terraform'}
 Plug 'mattn/vim-maketable'
 
 " Plug 'github/copilot.vim'
+
 call plug#end()

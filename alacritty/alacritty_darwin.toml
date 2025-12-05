@@ -1,0 +1,104 @@
+
+[shell]
+program = "/bin/zsh"
+
+[env]
+WINIT_X11_SCALE_FACTOR = "1.0"
+
+[font]
+size = 16
+normal = { family = "Ricty Nerd Font" }
+bold = { family = "Ricty Nerd Font", style = "Bold" }
+italic = { family = "Ricty Nerd Font", style = "Italic" }
+bold_italic = { family = "Ricty Nerd Font", style = "Bold Italic" }
+
+
+[colors]
+transparent_background_colors = false
+draw_bold_text_with_bright_colors = true
+
+# Primary colors
+[colors.primary]
+background='#000000'
+foreground='#ffffff'
+
+# Cursor colors
+[colors.cursor]
+text='#F81CE5'
+cursor='#ffffff'
+
+[colors.normal]
+black   = '#000000'
+red     = '#ee0000'
+green   = '#00ff00'
+yellow  = '#ffff00'
+blue    = '#00bfff'
+magenta = '#cc00ff'
+cyan    = '#00ffff'
+white   = '#d0d0d0'
+
+[colors.bright]
+black   = '#808080'
+red     = '#fe0100'
+green   = '#33ff00'
+yellow  = '#feff00'
+blue    = '#0066ff'
+magenta = '#cc00ff'
+cyan    = '#00ffff'
+white   = '#FFFFFF'
+
+[window]
+opacity = 0.9
+# startup_mode = "Maximized"
+
+[[hints.enabled]]
+command = "xdg-open" # On Linux/BSD
+# command = "open" # On macOS
+# command = { program = "cmd", args = [ "/c", "start", "" ] } # On Windows
+hyperlinks = true
+post_processing = true
+persist = false
+mouse.enabled = false
+regex = "(ipfs:|ipns:|magnet:|mailto:|gemini://|gopher://|https://|http://|news:|file:|git://|ssh:|ftp://)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"
+
+# ====================== KEYBOARD ======================
+[keyboard]
+bindings = [
+	{key = "Slash", mods = "Control", chars = "\u001F"},
+	{key = "Space", mods = "Control", chars = "\u0000"},
+	{key = "C", mods = "Alt", action = "Copy"},
+	{key = "V", mods = "Alt", action = "Paste"}
+]
+
+[mouse]
+bindings = [
+	{mouse = "Right", action = "Paste"},
+	{mouse = "Right", mods = "Shift", action = "Copy"}
+]
+
+# ====================== DEBUG ======================
+[debug]
+
+# Display the time it takes to draw each frame.
+render_timer = false # Default: false
+
+# Keep the log file after quitting Alacritty.
+persistent_logging = false # Default: false
+
+log_level = "Warn" # Default: "Warn"
+
+# Force use of a specific renderer, "None" will use the highest available one.
+renderer = "None" # Default: "None"
+
+# Log all received window events.
+print_events = false # Default: false
+
+# Highlight window damage information.
+highlight_damage = false # Default: false
+
+# Use EGL as display API if the current platform allows it.
+prefer_egl = false # Default: false
+
+# [bell.command]
+# program = "afplay"
+# args = ["/System/Library/Sounds/Glass.aiff"]

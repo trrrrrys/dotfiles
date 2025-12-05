@@ -29,7 +29,7 @@ set smartindent
 set showmatch
 
 " 現在の行をハイライト
-set cursorline
+" set cursorline
 " コマンドラインの補完
 set wildmenu
 " set wildmode=list:longest:full

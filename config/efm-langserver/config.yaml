@@ -4,13 +4,16 @@ root-markers:
 tools:
   json-prettier: &json-prettier
     format-command: |
-      deno run -A --no-lock npm:prettier ${INPUT}
+      deno run -A --no-lock npm:prettier --parser json --stdin-filepath ${INPUT}
+    format-stdin: true
   css-prettier: &css-prettier
     format-command: |
-      deno run -A --no-lock npm:prettier --parser css ${INPUT}
+      deno run -A --no-lock npm:prettier --parser css --stdin-filepath ${INPUT}
+    format-stdin: true
   html-prettier: &html-prettier
     format-command: |
-      deno run -A --no-lock npm:prettier --parser html ${INPUT}
+      deno run -A --no-lock npm:prettier --parser html --stdin-filepath ${INPUT}
+    format-stdin: true
   biomefmt: &biomefmt
     format-command: |
       deno run -A --no-lock npm:biome format --stdin-file-path=${INPUT}

@@ -29,14 +29,18 @@
       },
       "hoverKind": "SynopsisDocumentation",
       "linksInHover": false,
-      "build.buildFlags": [ "-tags=wireinject" ],
-      "build.standaloneTags": ["ignore", "wireinject", "!wireinject"]
+      "build.buildFlags": ["-tags=wireinject"],
+      "build.standaloneTags": ["ignore", "wireinject", "!wireinject"],
+      "build.directoryFilters": ["-**/node_modules", "-**/test", "-**/testdata", "-**/mock_domain", "-**/mock_infra", "-**/mock_usecase"]
     },
     "capabilities": {}
   },
   "golangci-lint-langserver": {
     "initialization_options": {
-      "command": ["golangci-lint", "run", "--out-format", "json"]
+      "command": [
+        "sh", "-c",
+        "go tool golangci-lint run --output.json.path stdout || golangci-lint run --output.json.path stdout"
+      ]
     }
   },
   "pyls-all": {
@@ -49,6 +53,7 @@
     "disabled": false,
     "allowlist": [
       "go",
+      "proto",
       "javascript",
       "typescript",
       "javacriptreact",

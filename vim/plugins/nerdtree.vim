@@ -15,4 +15,4 @@ function NerdTreeFindToggle()
     endif
 endfunction
 
-nnoremap <silent> <c-q> :call NerdTreeFindToggle()<CR>
+" nnoremap <silent> <c-q> :call NerdTreeFindToggle()<CR>

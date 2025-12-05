@@ -13,7 +13,7 @@ au FileType python,go set shiftwidth=4
 au BufNewFile,BufRead *.tsx set filetype=typescriptreact
 
 " vimgrep時に自動でqfウィンドウで開く
-autocmd QuickfixCmdPost make,grep,grepadd,vimgrep cwindow
+" autocmd QuickfixCmdPost make,grep,grepadd,vimgrep cwindow
 
 " tftplファイルを開いた際にterraform filetypeを設定
 autocmd BufNewFile,BufRead *.tftpl set filetype=terraform

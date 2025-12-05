@@ -44,7 +44,7 @@ alias todolist="find . -type d -name .git -prune -o -type d -name 'node_modules*
 alias du="dust"
 
 # Docker関連
-alias dlog="docker ps --format '{{.Names}}' | peco | xargs docker logs -f"
+alias dlog="docker ps -a --format '{{.Names}}' | peco | xargs docker logs -f -n 100"
 alias drm="docker ps -a --format '{{.Names}}' | peco | xargs docker rm -f"
 alias dps="docker ps --format 'table {{.ID}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}'"
 
@@ -52,9 +52,18 @@ alias localaws='aws --profile localstack --endpoint="http://localhost:4566"'
 
 # gh
 alias ghopen="gh repo view --web"
+alias ghdash="gh dash"
 alias propen="gh pr view --web"
 alias prview="gh pr view --web"
-alias prdraft="gh pr create -a \"@me\" -d && gh pr view --web"
+alias prdraft="gh pr create --base main -a '@me' -d && gh pr view --web"
+
+prdraftsp() {
+  local _branchName=$(git branch -r --format='%(refname:short)' | sed 's/^origin\///' | tac | peco --query='release/sp' | tr -d '\\n')
+  gh pr create -a '@me' -d --base $_branchName && gh pr view --web
+}
+
 
 # git
 alias cdgr="git rev-parse --is-inside-work-tree > /dev/null 2>&1 && git rev-parse --show-toplevel"
+
+alias clasp="deno run -A npm:@google/clasp"

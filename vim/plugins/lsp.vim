@@ -56,8 +56,9 @@ function! s:toggle_inlay_hints() abort
 endfunction
 
 " logging
-let g:lsp_log_verbose = 0
-let g:lsp_log_file = expand('~/tmp/vim-lsp.log')
+" let g:lsp_log_verbose = 0
+" let g:lsp_log_file = expand('~/tmp/vim-lsp.log')
+let g:lsp_log_file = ""
 
 hi Pmenu ctermfg=cyan ctermbg=black
 hi PmenuSel ctermfg=black ctermbg=white
@@ -117,10 +118,12 @@ function! s:configure_lsp() abort
   nnoremap <buffer> gQ :<C-u>LspDocumentFormat<CR>
   vnoremap <buffer> gQ :LspDocumentRangeFormat<CR>
   nnoremap <buffer> K :<C-u>LspHover<CR>
+  vnoremap <buffer> K <Nop>
   nnoremap <buffer> gC :<C-u>LspCodeAction<CR>
   inoremap <buffer> <c-g> :<C-u>LspCodeAction<CR>
   nnoremap <buffer> gi :<C-u>LspImplementation<CR>
   nnoremap <buffer> gr :<C-u>LspRename<CR>
+  nnoremap <buffer> <F2> :<C-u>LspRename<CR>
   nnoremap <buffer> gL :<C-u>LspCodeLens<CR>
   nnoremap <buffer> gI :<C-u>LspCallHierarchyIncoming<CR>
   nnoremap <buffer> gO :<C-u>LspCallHierarchyOutgoing<CR>

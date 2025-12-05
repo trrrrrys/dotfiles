@@ -45,9 +45,9 @@ nnoremap sq :<C-u>bd<CR>
 nnoremap sQ :<C-u>bd<CR>
 
 " 括弧の補完
-inoremap {<Enter> {}<Left><CR><ESC><S-o>
-inoremap [<Enter> []<Left><CR><ESC><S-o>
-inoremap (<Enter> ()<Left><CR><ESC><S-o>
+" inoremap {<Enter> {}<Left><CR><ESC><S-o>
+" inoremap [<Enter> []<Left><CR><ESC><S-o>
+" inoremap (<Enter> ()<Left><CR><ESC><S-o>
 
 nnoremap <expr> sr ':%s/' . expand('<cword>') . '/'
 vnoremap <expr> sr ':%s/' . expand('<cword>') . '/'
@@ -118,6 +118,7 @@ augroup QuickFixWindow
 augroup END
 
 function! s:qf_mapping() abort
+  nnoremap <buffer><silent> o <CR>
 	nnoremap <buffer><silent> <CR> <CR>:<C-u>ccl<CR>
 	nnoremap <buffer><silent> <esc> :<C-u>ccl<CR>
 	nnoremap <buffer><silent> <C-c> :<C-u>ccl<CR>
